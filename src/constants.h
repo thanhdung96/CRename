@@ -5,7 +5,7 @@
 #include <sstream>
 using namespace std;
 
-typedef const unsigned ConstInt;
+typedef const int ConstInt;
 
 string PROMPT_GREETER = "crename> ";
 string PARSE_FAILURE_NOTIFICATION = "unable to understand the command ";
@@ -20,7 +20,7 @@ string MAIN_MENU_APPLY = "apply";
 string MAIN_MENU_HELP = "help";
 string MAIN_MENU_EXIT = "exit";
 
-ConstInt INT_MAIN_MENU_FILE=1;
+ConstInt INT_MAIN_MENU_FILE = 1;
 ConstInt INT_MAIN_MENU_RULE = 2;
 ConstInt INT_MAIN_MENU_PREVIEW = 3;
 ConstInt INT_MAIN_MENU_APPLY = 4;
