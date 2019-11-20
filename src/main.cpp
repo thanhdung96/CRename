@@ -23,15 +23,17 @@ void menuFileActions(){
 void menuRuleActions(){
 	switch (intParsedPrompt[1])
 	{
-	case INT_MENU_ACTION_IMPORT:	//import a directory
-		break;
-	case INT_MENU_ACTION_ADD:		//add a file
+	case INT_MENU_ACTION_ADD:		//add a rule
 		break;
 	case INT_MENU_ACTION_REMOVE:
 		break;
 	default:
 		break;
 	}
+}
+
+void menuApplyActions(){
+
 }
 
 bool parsingCommand(string* returnedError){
@@ -70,8 +72,10 @@ void prompting(){
 			menuFileActions();
 			break;
 		case INT_MAIN_MENU_RULE:
+			menuRuleActions();
 			break;
 		case INT_MAIN_MENU_APPLY:
+			menuApplyActions();
 			break;
 		default:	//default case is help
 			break;

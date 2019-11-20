@@ -20,7 +20,7 @@ string MAIN_MENU_APPLY = "apply";
 string MAIN_MENU_HELP = "help";
 string MAIN_MENU_EXIT = "exit";
 
-ConstInt INT_MAIN_MENU_FILE=1;
+ConstInt INT_MAIN_MENU_FILE = 1;
 ConstInt INT_MAIN_MENU_RULE = 2;
 ConstInt INT_MAIN_MENU_PREVIEW = 3;
 ConstInt INT_MAIN_MENU_APPLY = 4;
