@@ -8,6 +8,10 @@ CRule::~CRule()
 {
 }
 
+/*
+*	Leave these methods listed below empty
+*/
+
 // method to be derived in inherited classes
 string CRule::preview(const string& fileName){
 	return nullptr;
@@ -15,5 +19,10 @@ string CRule::preview(const string& fileName){
 
 // method to be derived in inherited classes
 void CRule::apply(string& fileName){
-	return;
+	
+}
+
+// method to be derived in inherited classes
+string* CRule::toString(){
+	return nullptr;
 }

@@ -8,10 +8,11 @@ class CRule
 {
 public:
 	CRule();
-	~CRule();
+	virtual ~CRule();
 
 	virtual string preview(const string& fileName);
 	virtual void apply(string& fileName);
+	virtual string* toString();
 
 private:
 };

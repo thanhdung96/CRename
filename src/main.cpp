@@ -2,6 +2,7 @@
 #include "utilities.h"
 #include "common.h"
 #include "constants.h"
+#include "CRuleRemove.h"
 using namespace std;
 
 bool isExit = false;
