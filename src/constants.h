@@ -5,7 +5,7 @@
 #include <sstream>
 using namespace std;
 
-typedef const unsigned ConstInt;
+typedef const int ConstInt;
 
 string PROMPT_GREETER = "crename> ";
 string PARSE_FAILURE_NOTIFICATION = "unable to understand the command ";

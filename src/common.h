@@ -8,7 +8,7 @@
 
 string promptInput;
 string endParameter;
-vector<ConstInt> intParsedPrompt;
+vector<unsigned> intParsedPrompt;
 unordered_map<string, ConstInt> commandMap;
 
 // TODO: replace string with "path" class in boost library
