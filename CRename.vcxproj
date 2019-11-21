@@ -71,12 +71,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CRule.cpp" />
+    <ClCompile Include="src\CRuleInsert.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\common.h" />
     <ClInclude Include="src\constants.h" />
+    <ClInclude Include="src\CRule.h" />
+    <ClInclude Include="src\CRuleInsert.h" />
     <ClInclude Include="src\utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
