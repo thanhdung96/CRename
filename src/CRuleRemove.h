@@ -23,7 +23,7 @@ public:
 	void setLength(const size_t& length);
 
 	string preview(const string& fileName);
-	void apply(string& fileName);
+	bool apply(string& fileName);
 	string* toString();
 
 private:

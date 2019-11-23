@@ -11,7 +11,7 @@ public:
 	virtual ~CRule();
 
 	virtual string preview(const string& fileName);
-	virtual void apply(string& fileName);
+	virtual bool  apply(string& fileName);
 	virtual string* toString();
 
 private:

@@ -2,39 +2,52 @@
 
 CRuleInsert::CRuleInsert()
 {
-	this->text = new string("");
+	text = "";
 	this->position = 0;
 }
 
 CRuleInsert::~CRuleInsert()
 {
-	delete this->text;
 }
 
 void CRuleInsert::setPosition(const unsigned& pos){
 	this->position = pos;
 }
 
-void CRuleInsert::setText(string* text){
-	this->text = text;
+void CRuleInsert::setText(string& newText){
+	text = newText;
 }
 
-void CRuleInsert::apply(string& fileName){
-	if (this->text == nullptr && this->text->compare("") == 0){	// if string is null or empty
-		// TODO implement processing file name based on rule definition
+bool CRuleInsert::apply(string& fileName){
+	if (text.compare("") == 0){	// if string is null or empty
+		return false;
 	}
 	else{
-		// TODO implement processing file name based on rule definition
+		makeValid(fileName.size());
+		fileName.insert(position, (this->text));
+		return true;
 	}
 }
 
 string CRuleInsert::preview(const string& fileName){
-	if (this->text == nullptr && this->text->compare("") == 0){	// if string is null or empty
-		return nullptr;
+	if (text.compare("") == 0){	// if string is null or empty
+		return "";
 	}
 	else{
-		// TODO implement processing file name based on rule definition
-		return nullptr;
+		makeValid(fileName.size());
+		string ret = fileName;
+		ret.insert(position, (this->text));
+		return ret;
+	}
+}
+
+// make rule configuration valid for each file name applied
+void CRuleInsert::makeValid(unsigned fileNameSize) {
+	if(position < 0){
+		position = 0;
+	}
+	if(position > fileNameSize){
+		position = fileNameSize;
 	}
 }
 
@@ -43,7 +56,7 @@ string* CRuleInsert::toString(){
 	string temp;
 	string* str = new string("insert \"");
 
-	str->append(*(this->text));
+	str->append(text);
 	str->append("\" at ");
 	ss << this->position;
 	ss >> temp;

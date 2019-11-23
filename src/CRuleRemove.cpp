@@ -25,7 +25,7 @@ string CRuleRemove::preview(const string& fileName){
 	return nullptr;
 }
 
-void CRuleRemove::apply(string& fileName){
+bool CRuleRemove::apply(string& fileName){
 	// TODO implement processing file name based on rule definition
 }
 

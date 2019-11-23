@@ -13,14 +13,17 @@ public:
 	~CRuleInsert();
 
 	void setPosition(const unsigned& pos);
-	void setText(string* newText);
+	void setText(string& newText);
 	string preview(const string& fileName);
-	void apply(string& fileName);
+	bool apply(string& fileName);
 	string* toString();
 
 private:
 	unsigned position;
-	string* text;
+	string text;
+	
+private:
+	void makeValid(unsigned fileNameSize);
 };
 
 #endif

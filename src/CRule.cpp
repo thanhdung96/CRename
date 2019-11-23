@@ -18,7 +18,7 @@ string CRule::preview(const string& fileName){
 }
 
 // method to be derived in inherited classes
-void CRule::apply(string& fileName){
+bool CRule::apply(string& fileName){
 	
 }
 
