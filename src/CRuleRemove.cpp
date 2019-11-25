@@ -2,6 +2,9 @@
 
 CRuleRemove::CRuleRemove()
 {
+	position = 0;
+	length = 0;
+	direction = Direction::Left;
 }
 
 CRuleRemove::~CRuleRemove()
@@ -21,12 +24,48 @@ void CRuleRemove::setPosition(const unsigned& position){
 }
 
 string CRuleRemove::preview(const string& fileName){
-	// TODO implement processing file name based on rule definition
-	return nullptr;
+	if(fileName.compare("") == 0){
+		return "";
+	}
+	
+	makeValid(fileName.size());
+	size_t startIndex = 0;
+	switch(direction){
+		case Direction::Left:
+			startIndex = position - length;
+			break;
+		default:
+			startIndex = position;
+			break;
+	}
+	string ret = fileName;
+	return ret.erase(startIndex, length);
 }
 
 bool CRuleRemove::apply(string& fileName){
-	// TODO implement processing file name based on rule definition
+	return true;
+}
+
+void CRuleRemove::makeValid(size_t fileNameSize){
+	if(position < 0){
+		position= 0;
+	}
+	if(position > fileNameSize){
+		position = fileNameSize;
+	}
+	switch(direction){
+		// if the lenght makes the removal out of index of string, set it equal to the rest of the string based on direction
+		case Direction::Left:
+			if(position - length < 0){
+				length = position;
+			}
+			break;
+		default:
+			if(position + length > fileNameSize){
+				length = fileNameSize - position;
+			}
+			break;
+	}
 }
 
 string* CRuleRemove::toString(){

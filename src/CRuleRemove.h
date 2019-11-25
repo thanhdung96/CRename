@@ -30,5 +30,8 @@ private:
 	unsigned position;
 	size_t length;
 	Direction direction;
+	
+private:
+	void makeValid(size_t fileNameSize);
 };
 #endif
