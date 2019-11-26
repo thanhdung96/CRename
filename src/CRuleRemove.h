@@ -18,8 +18,8 @@ public:
 	CRuleRemove();
 	~CRuleRemove();
 
-	void setDirection(Direction direction);
-	void setPosition(const unsigned& position);
+	void setRemoveDirection(Direction direction);	//set direction for removal
+	void setPosition(const unsigned& position, const Direction positionDirectionRelativeTo);
 	void setLength(const size_t& length);
 
 	string preview(const string& fileName);
@@ -28,8 +28,10 @@ public:
 
 private:
 	unsigned position;
+	unsigned storedPosition;	//used to cache user input position to restore when position is changed in makeValid
 	size_t length;
 	Direction direction;
+	Direction positionDirectionRelativeTo;
 	
 private:
 	void makeValid(size_t fileNameSize);

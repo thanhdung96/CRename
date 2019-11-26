@@ -4,14 +4,15 @@ CRuleRemove::CRuleRemove()
 {
 	position = 0;
 	length = 0;
-	direction = Direction::Left;
+	direction = Direction::Right;
+	positionDirectionRelativeTo = Direction::Left;
 }
 
 CRuleRemove::~CRuleRemove()
 {
 }
 
-void CRuleRemove::setDirection(CRuleRemove::Direction direction){
+void CRuleRemove::setRemoveDirection(Direction direction){
 	this->direction = direction;
 }
 
@@ -19,8 +20,10 @@ void CRuleRemove::setLength(const size_t& length){
 	this->length = length;
 }
 
-void CRuleRemove::setPosition(const unsigned& position){
+void CRuleRemove::setPosition(const unsigned& position, const Direction positionDirectionRelativeTo){
+	this->positionDirectionRelativeTo = positionDirectionRelativeTo;
 	this->position = position;
+	this->storedPosition = position;
 }
 
 string CRuleRemove::preview(const string& fileName){
@@ -43,18 +46,42 @@ string CRuleRemove::preview(const string& fileName){
 }
 
 bool CRuleRemove::apply(string& fileName){
+	if (fileName.compare("") == 0){
+		return false;
+	}
+
+	makeValid(fileName.size());
+	size_t startIndex = 0;
+	switch (direction){
+	case Direction::Left:
+		startIndex = position - length;
+		break;
+	default:
+		startIndex = position;
+		break;
+	}
+	fileName.erase(startIndex, length);
+
 	return true;
 }
 
 void CRuleRemove::makeValid(size_t fileNameSize){
+	//adjusting position to make it in range of string length
 	if(position < 0){
 		position= 0;
 	}
-	if(position > fileNameSize){
+	else if(position > fileNameSize){
 		position = fileNameSize;
 	}
+	else{
+		//if position relative to the left, do nothing
+		// else convert it to position relative to the left
+		position = positionDirectionRelativeTo == Direction::Right ? fileNameSize - storedPosition : storedPosition;
+	}
+
 	switch(direction){
-		// if the lenght makes the removal out of index of string, set it equal to the rest of the string based on direction
+		//adjusting length value
+		// if the length makes the removal out of index of string, set it equal to the rest of the string based on direction
 		case Direction::Left:
 			if(position - length < 0){
 				length = position;
