@@ -48,7 +48,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <AdditionalIncludeDirectories>C:\local\boost_1_71_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -79,6 +79,8 @@
     <ClCompile Include="src\CRule.cpp" />
     <ClCompile Include="src\CRuleInsert.cpp" />
     <ClCompile Include="src\CRuleRemove.cpp" />
+    <ClCompile Include="src\CRuleReplace.cpp" />
+    <ClCompile Include="src\CRuleSwitchCase.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\utilities.cpp" />
   </ItemGroup>
@@ -88,6 +90,8 @@
     <ClInclude Include="src\CRule.h" />
     <ClInclude Include="src\CRuleInsert.h" />
     <ClInclude Include="src\CRuleRemove.h" />
+    <ClInclude Include="src\CRuleReplace.h" />
+    <ClInclude Include="src\CRuleSwitchCase.h" />
     <ClInclude Include="src\utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
