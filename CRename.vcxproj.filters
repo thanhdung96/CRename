@@ -36,6 +36,9 @@
     <ClCompile Include="src\CRuleSwitchCase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\CRuleNumber.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\constants.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\CRuleSwitchCase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CRuleNumber.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
