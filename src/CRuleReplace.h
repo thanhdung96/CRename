@@ -2,7 +2,12 @@
 #define CRULE_REPLACE_H
 
 #include "CRule.h"
-#include <boost\algorithm\string\replace.hpp>
+
+#ifdef IS_LINUX
+	#include <boost/algorithm/string/replace.hpp>
+#else
+	#include <boost\algorithm\string\replace.hpp>
+#endif
 
 class CRuleReplace: public CRule
 {

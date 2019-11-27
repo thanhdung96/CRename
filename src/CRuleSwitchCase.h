@@ -3,7 +3,13 @@
 
 #include "CRule.h"
 #include "utilities.h"
-#include <boost\algorithm\string\case_conv.hpp>
+
+#ifdef IS_LINUX
+	#include <boost/algorithm/string/case_conv.hpp>
+#else
+	#include <boost\algorithm\string\case_conv.hpp>
+#endif
+
 #include <sstream>
 #include <vector>
 

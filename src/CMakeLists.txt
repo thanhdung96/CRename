@@ -8,6 +8,8 @@ file(GLOB CRename_SRC
 )
 
 include_directories("~/Documents/CPP/libs")
+add_definitions(-DIS_LINUX)
+
 add_executable(crename ${CRename_SRC})
 
 install(TARGETS crename RUNTIME DESTINATION bin)
