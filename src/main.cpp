@@ -1,4 +1,5 @@
 #include <iostream>
+#include "file_functions.h"
 #include "utilities.h"
 #include "common.h"
 #include "constants.h"
@@ -8,14 +9,53 @@ using namespace std;
 bool isExit = false;
 
 void menuFileActions(){
+	string pth;
 	switch (intParsedPrompt[1])
 	{
-	case INT_MENU_ACTION_IMPORT:	//import a directory
+	case INT_MENU_ACTION_IMPORT:{	//import a directory
+		unsigned count = 0;
+		cout << IMPORT_PROMPT;
+		getline(cin, pth);
+		if (!fileImportDirectory(&lstFiles, pth, count)){
+			cout << IMPORT_DIRECTORY_FAILED;
+		}
+		else{
+			cout << "imported " << count << " files.\n";
+		}
+		pth = "";	//reset path for next import or addition
 		break;
-	case INT_MENU_ACTION_ADD:		//add a file
+	}
+
+	case INT_MENU_ACTION_ADD:{		//add a file
+		cout << IMPORT_PROMPT;
+		getline(cin, pth);
+		if (!addFile(&lstFiles, pth)){
+			cout << ADD_FILE_FAILED;
+		}
+		pth = "";	//reset path for next import or addition
 		break;
-	case INT_MENU_ACTION_REMOVE:
+	}
+
+	case INT_MENU_ACTION_REMOVE:{
+		if (intParsedPrompt[2] == INT_PARAMETER_ALL){
+			fileRemoveAll(&lstFiles);
+		}
+		else{
+			fileRemove(&lstFiles, intParsedPrompt[2]);
+		}
 		break;
+	}
+
+	case INT_MENU_ACTION_SHOW:{
+		if (intParsedPrompt[2] == INT_PARAMETER_ALL){
+			fileShowAll(&lstFiles);
+		}
+		else{
+			fileShow(&lstFiles, intParsedPrompt[2]);
+		}
+		break;
+	}
+
 	default:
 		break;
 	}
@@ -27,6 +67,8 @@ void menuRuleActions(){
 	case INT_MENU_ACTION_ADD:		//add a rule
 		break;
 	case INT_MENU_ACTION_REMOVE:
+		break;
+	case INT_MENU_ACTION_SHOW:
 		break;
 	default:
 		break;
@@ -43,12 +85,17 @@ bool parsingCommand(string* returnedError){
 	intParsedPrompt.clear();
 	
 	while (getline(stringStream, s, PROMPT_DELIMITER)){
-		if (commandMap.find(s) != commandMap.end()){
+		if (commandMap.find(s) != commandMap.end()){		//if command is not found in the library (command map)
 			intParsedPrompt.push_back(commandMap.find(s)->second);
 		}
 		else{
-			returnedError = &s;
-			return PARSE_FAILED;
+			if (isNumber(s)){
+				intParsedPrompt.push_back(stoi(s));
+			}
+			else{
+				returnedError = &s;
+				return PARSE_FAILED;
+			}
 		}
 	}
 	return PARSE_OK;
@@ -93,8 +140,9 @@ void preparingCommandsMap(){
 	commandMap.insert(pair<string, ConstInt>(MAIN_MENU_HELP, INT_MAIN_MENU_HELP));
 
 	commandMap.insert(pair<string, ConstInt>(MENU_ACTION_IMPORT, INT_MENU_ACTION_IMPORT));
-	commandMap.insert(pair<string, ConstInt>(MENU_ACTION_ADD, INT_MENU_ACTION_IMPORT));
+	commandMap.insert(pair<string, ConstInt>(MENU_ACTION_ADD, INT_MENU_ACTION_ADD));
 	commandMap.insert(pair<string, ConstInt>(MENU_ACTION_REMOVE, INT_MENU_ACTION_REMOVE));
+	commandMap.insert(pair<string, ConstInt>(MENU_ACTION_SHOW, INT_MENU_ACTION_SHOW));
 
 	commandMap.insert(pair<string, ConstInt>(PARAMETER_ALL, INT_PARAMETER_ALL));
 }
