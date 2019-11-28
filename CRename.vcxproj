@@ -52,6 +52,8 @@
       <MinimalRebuild>false</MinimalRebuild>
       <AdditionalIncludeDirectories>C:\local\boost_1_71_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <ShowIncludes>false</ShowIncludes>
+      <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -84,6 +86,7 @@
     <ClCompile Include="src\CRuleRemove.cpp" />
     <ClCompile Include="src\CRuleReplace.cpp" />
     <ClCompile Include="src\CRuleSwitchCase.cpp" />
+    <ClCompile Include="src\file_functions.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\utilities.cpp" />
   </ItemGroup>
@@ -96,6 +99,7 @@
     <ClInclude Include="src\CRuleRemove.h" />
     <ClInclude Include="src\CRuleReplace.h" />
     <ClInclude Include="src\CRuleSwitchCase.h" />
+    <ClInclude Include="src\file_functions.h" />
     <ClInclude Include="src\utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
