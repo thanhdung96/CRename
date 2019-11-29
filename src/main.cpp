@@ -20,7 +20,12 @@ void menuFileActions(){
 			cout << IMPORT_DIRECTORY_FAILED;
 		}
 		else{
-			cout << "imported " << count << " files.\n";
+			if (count == 0){
+				cout << "empty directory.\n";
+			}
+			else{
+				cout << "imported " << count << " files.\n";
+			}
 		}
 		pth = "";	//reset path for next import or addition
 		break;
@@ -32,26 +37,45 @@ void menuFileActions(){
 		if (!addFile(&lstFiles, pth)){
 			cout << ADD_FILE_FAILED;
 		}
+		cout << "added 1 file.\n";
 		pth = "";	//reset path for next import or addition
 		break;
 	}
 
 	case INT_MENU_ACTION_REMOVE:{
 		if (intParsedPrompt[2] == INT_PARAMETER_ALL){
-			fileRemoveAll(&lstFiles);
+			size_t totalRemoved = fileRemoveAll(&lstFiles);
+			cout << totalRemoved << " file(s) removed.\n";
 		}
 		else{
-			fileRemove(&lstFiles, intParsedPrompt[2]);
+			if (fileRemove(&lstFiles, intParsedPrompt[2])){
+				cout << "[" << intParsedPrompt[2] << "] removed.\n";
+			}
 		}
 		break;
 	}
 
 	case INT_MENU_ACTION_SHOW:{
 		if (intParsedPrompt[2] == INT_PARAMETER_ALL){
-			fileShowAll(&lstFiles);
+			vector<string>* lstFileStrings = fileShowAll(&lstFiles);
+			if (lstFileStrings == nullptr){
+				cout << "no files imported.\n";
+			}
+			else{
+				for (unsigned i = 0; i < lstFileStrings->size(); i++){
+					cout << "[" << i << "] " << lstFileStrings->at(i) << "\n";
+				}
+				delete lstFileStrings;
+			}
 		}
 		else{
-			fileShow(&lstFiles, intParsedPrompt[2]);
+			string f = fileShow(&lstFiles, intParsedPrompt[2]);
+			if (f.compare("") == 0){
+				cout << "file index out of range.\n";
+			}
+			else{
+				cout << "[" << intParsedPrompt[2] << "] " << f << "\n";
+			}
 		}
 		break;
 	}
@@ -79,7 +103,7 @@ void menuApplyActions(){
 
 }
 
-bool parsingCommand(string* returnedError){
+bool parsingCommand(string& returnedError){
 	stringstream stringStream(trimWhiteSpaces(promptInput));
 	string s;
 	intParsedPrompt.clear();
@@ -93,7 +117,7 @@ bool parsingCommand(string* returnedError){
 				intParsedPrompt.push_back(stoi(s));
 			}
 			else{
-				returnedError = &s;
+				returnedError = s;
 				return PARSE_FAILED;
 			}
 		}
@@ -105,7 +129,7 @@ void prompting(){
 	string returnedError;
 	cout << PROMPT_GREETER;
 	getline(cin, promptInput);
-	bool status = parsingCommand(&returnedError);
+	bool status = parsingCommand(returnedError);
 	
 	if (status == PARSE_FAILED){
 		cout << PARSE_FAILURE_NOTIFICATION << returnedError << "\n";

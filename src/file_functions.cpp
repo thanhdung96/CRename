@@ -3,9 +3,13 @@
 bool fileImportDirectory(vector<path>* lstFile, const string pth, unsigned& count){
 	if (exists(pth)){
 		if (is_directory(pth)){
+			path p;
 			for (directory_entry& entry : directory_iterator(pth)){
-				lstFile->push_back(entry.path());
-				count += 1;
+				p = entry.path();
+				if (is_regular_file(p)){
+					lstFile->push_back(entry.path());
+					count += 1;
+				}
 			}
 			return true;
 		}
@@ -26,12 +30,25 @@ bool addFile(vector<path>* lstFile, const string pth){
 	return false;
 }
 
-string* fileShow(vector<path>* lstFile, const unsigned& index){
-	return nullptr;
+string fileShow(vector<path>* lstFile, const unsigned& index){
+	if (index < 0 || index >= lstFile->size()){
+		return "";
+	}
+
+	return lstFile->at(index).string();
 }
 
 vector<string>* fileShowAll(vector<path>* lstFile){
-	return nullptr;
+	if (lstFile->size() == 0){
+		return nullptr;
+	}
+
+	vector<string>* lstFileString = new vector<string>();
+	for (unsigned i = 0; i < lstFile->size(); i++){
+		lstFileString->push_back(lstFile->at(i).string());
+	}
+
+	return lstFileString;
 }
 
 bool fileRemove(vector<path>* lstFile, const unsigned& index){
@@ -39,11 +56,14 @@ bool fileRemove(vector<path>* lstFile, const unsigned& index){
 		return false;
 	}
 	lstFile->erase(lstFile->begin() + index);
+	lstFile->shrink_to_fit();
 	return true;
 }
 
-bool fileRemoveAll(vector<path>* lstFile){
+size_t fileRemoveAll(vector<path>* lstFile){
+	size_t totalRemoved = lstFile->size();
 	lstFile->clear();
 	lstFile->shrink_to_fit();
-	return true;
+
+	return totalRemoved;
 }

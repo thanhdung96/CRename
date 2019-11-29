@@ -7,7 +7,7 @@ using namespace std;
 
 typedef const int ConstInt;
 
-string PROMPT_GREETER = "crename> ";
+string PROMPT_GREETER = "\ncrename> ";
 string IMPORT_PROMPT = "--- > ";
 const char PROMPT_DELIMITER = ' ';
 const bool PARSE_OK = true;
