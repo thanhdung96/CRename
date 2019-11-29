@@ -3,7 +3,13 @@
 
 #include <vector>
 #include <unordered_map>
-#include <boost\filesystem.hpp>
+
+#ifdef IS_LINUX
+	#include <boost/filesystem.hpp>
+#else
+	#include <boost\filesystem.hpp>
+#endif
+
 #include "constants.h"
 
 using namespace boost::filesystem;

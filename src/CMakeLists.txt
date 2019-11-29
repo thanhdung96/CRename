@@ -7,9 +7,18 @@ file(GLOB CRename_SRC
     "*.cpp"
 )
 
-include_directories("~/Documents/CPP/libs")
+SET(Boost_INCLUDE_DIRS "/home/thanhdung/Documents/CPP/libs/boost_1_71_0/out/include/")
+SET(Boost_LIBRARIES "/home/thanhdung/Documents/CPP/libs/boost_1_71_0/out/lib/")
 add_definitions(-DIS_LINUX)
 
-add_executable(crename ${CRename_SRC})
+set(Boost_USE_STATIC_LIBS OFF) 
+set(Boost_USE_MULTITHREADED ON)  
+set(Boost_USE_STATIC_RUNTIME OFF) 
+find_package(Boost 1.71.0 COMPONENTS filesystem)
 
-install(TARGETS crename RUNTIME DESTINATION bin)
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS}) 
+    add_executable(crename ${CRename_SRC}) 
+    target_link_libraries(crename ${Boost_LIBRARIES})
+endif()
+

@@ -1,4 +1,9 @@
-#include <boost\filesystem.hpp>
+#ifdef IS_LINUX
+	#include <boost/filesystem.hpp>
+#else
+	#include <boost\filesystem.hpp>
+#endif
+
 #include <vector>
 #include <string>
 #include <sstream>
