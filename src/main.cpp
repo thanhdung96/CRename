@@ -38,20 +38,38 @@ void menuFileActions(){
 
 	case INT_MENU_ACTION_REMOVE:{
 		if (intParsedPrompt[2] == INT_PARAMETER_ALL){
-			fileRemoveAll(&lstFiles);
+			size_t totalRemoved = fileRemoveAll(&lstFiles);
+			cout << totalRemoved << " file(s) removed.\n";
 		}
 		else{
-			fileRemove(&lstFiles, intParsedPrompt[2]);
+			if (fileRemove(&lstFiles, intParsedPrompt[2])){
+				cout << "[" << intParsedPrompt[2] << "] removed.\n";
+			}
 		}
 		break;
 	}
 
 	case INT_MENU_ACTION_SHOW:{
 		if (intParsedPrompt[2] == INT_PARAMETER_ALL){
-			fileShowAll(&lstFiles);
+			vector<string>* lstFileStrings = fileShowAll(&lstFiles);
+			if (lstFileStrings == nullptr){
+				cout << "no files imported.\n";
+			}
+			else{
+				for (unsigned i = 0; i < lstFileStrings->size(); i++){
+					cout << "[" << i << "] " << lstFileStrings->at(i) << "\n";
+				}
+				delete lstFileStrings;
+			}
 		}
 		else{
-			fileShow(&lstFiles, intParsedPrompt[2]);
+			string f = fileShow(&lstFiles, intParsedPrompt[2]);
+			if (f.compare("") == 0){
+				cout << "file index out of range.\n";
+			}
+			else{
+				cout << "[" << intParsedPrompt[2] << "] " << f << "\n";
+			}
 		}
 		break;
 	}
