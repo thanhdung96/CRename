@@ -20,7 +20,12 @@ void menuFileActions(){
 			cout << IMPORT_DIRECTORY_FAILED;
 		}
 		else{
-			cout << "imported " << count << " files.\n";
+			if (count == 0){
+				cout << "empty directory.\n";
+			}
+			else{
+				cout << "imported " << count << " files.\n";
+			}
 		}
 		pth = "";	//reset path for next import or addition
 		break;
@@ -32,6 +37,7 @@ void menuFileActions(){
 		if (!addFile(&lstFiles, pth)){
 			cout << ADD_FILE_FAILED;
 		}
+		cout << "added 1 file.\n";
 		pth = "";	//reset path for next import or addition
 		break;
 	}
@@ -97,7 +103,7 @@ void menuApplyActions(){
 
 }
 
-bool parsingCommand(string* returnedError){
+bool parsingCommand(string& returnedError){
 	stringstream stringStream(trimWhiteSpaces(promptInput));
 	string s;
 	intParsedPrompt.clear();
@@ -111,7 +117,7 @@ bool parsingCommand(string* returnedError){
 				intParsedPrompt.push_back(stoi(s));
 			}
 			else{
-				returnedError = &s;
+				returnedError = s;
 				return PARSE_FAILED;
 			}
 		}
@@ -123,7 +129,7 @@ void prompting(){
 	string returnedError;
 	cout << PROMPT_GREETER;
 	getline(cin, promptInput);
-	bool status = parsingCommand(&returnedError);
+	bool status = parsingCommand(returnedError);
 	
 	if (status == PARSE_FAILED){
 		cout << PARSE_FAILURE_NOTIFICATION << returnedError << "\n";

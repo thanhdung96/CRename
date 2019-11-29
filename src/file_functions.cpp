@@ -3,9 +3,13 @@
 bool fileImportDirectory(vector<path>* lstFile, const string pth, unsigned& count){
 	if (exists(pth)){
 		if (is_directory(pth)){
+			path p;
 			for (directory_entry& entry : directory_iterator(pth)){
-				lstFile->push_back(entry.path());
-				count += 1;
+				p = entry.path();
+				if (is_regular_file(p)){
+					lstFile->push_back(entry.path());
+					count += 1;
+				}
 			}
 			return true;
 		}
