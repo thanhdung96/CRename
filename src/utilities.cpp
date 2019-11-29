@@ -25,3 +25,11 @@ string joinStrings(vector<string> lstString, const char delimiter) {
 
 	return ret;
 }
+
+bool isNumber(const string& s)
+{
+	return !s.empty() && find_if(
+		s.begin(), s.end(), [](char c) {
+		return !isdigit(c); 
+	}) == s.end();
+}
