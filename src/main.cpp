@@ -1,4 +1,11 @@
 #include <iostream>
+
+#ifdef IS_LINUX
+	#include <boost/algorithm/string/trim_all.hpp>
+#else
+	#include <boost\algorithm\string\trim_all.hpp>
+#endif
+
 #include "file_functions.h"
 #include "utilities.h"
 #include "common.h"
@@ -104,7 +111,8 @@ void menuApplyActions(){
 }
 
 bool parsingCommand(string& returnedError){
-	stringstream stringStream(trimWhiteSpaces(promptInput));
+	boost::trim_all(promptInput);
+	stringstream stringStream(promptInput);
 	string s;
 	intParsedPrompt.clear();
 	
