@@ -201,12 +201,12 @@ vector<string>* ruleShowAll(vector<CRule>* lstRules){
 		return nullptr;
 	}
 
-vector<string>* lstFileString = new vector<string>();
+	vector<string>* lstRuleString = new vector<string>();
 	for (unsigned i = 0; i < lstRules->size(); i++){
-		lstFileString->push_back(lstRules->at(i).toString());
+		lstRuleString->push_back(lstRules->at(i).toString());
 	}
 
-	return lstFileString;
+	return lstRuleString;
 }
 
 bool ruleRemove(vector<CRule>* lstRules, const unsigned& index){
