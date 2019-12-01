@@ -24,7 +24,7 @@ public:
 
 	string preview(const string& fileName);
 	bool apply(string& fileName);
-	string* toString();
+	string toString();
 
 private:
 	unsigned position;

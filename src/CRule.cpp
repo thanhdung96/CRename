@@ -23,6 +23,6 @@ bool CRule::apply(string& fileName){
 }
 
 // method to be derived in inherited classes
-string* CRule::toString(){
+string CRule::toString(){
 	return nullptr;
 }

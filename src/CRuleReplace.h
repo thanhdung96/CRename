@@ -17,7 +17,7 @@ public:
 
 	string preview(const string& fileName);
 	bool apply(string& fileName);
-	string* toString();
+	string toString();
 	void setFindWhat(const string& findWhat);
 	void setReplaceWith(const string& replaceWith);
 

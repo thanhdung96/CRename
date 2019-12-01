@@ -51,16 +51,16 @@ void CRuleInsert::makeValid(unsigned fileNameSize) {
 	}
 }
 
-string* CRuleInsert::toString(){
+string CRuleInsert::toString(){
 	stringstream ss;
 	string temp;
-	string* str = new string("insert \"");
+	string str = "insert \"";
 
-	str->append(text);
-	str->append("\" at ");
+	str.append(text);
+	str.append("\" at ");
 	ss << this->position;
 	ss >> temp;
-	str->append(temp);
+	str.append(temp);
 
 	return str;
 }

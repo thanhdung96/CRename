@@ -12,7 +12,7 @@ public:
 
 	virtual string preview(const string& fileName);
 	virtual bool apply(string& fileName);
-	virtual string* toString();
+	virtual string toString();
 
 private:
 };

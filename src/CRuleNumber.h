@@ -4,7 +4,7 @@
 #include "CRule.h"
 #include <sstream>
 
-class CRuleNumber
+class CRuleNumber : public CRule
 {
 public:
 	enum Direction{
@@ -20,7 +20,7 @@ public:
 
 	string preview(const string& fileName);
 	bool apply(string& fileName);
-	string* toString();
+	string toString();
 
 	void resetIndex();
 	void setPositionRelativeTo(const unsigned& position, const Direction& direction);

@@ -7,10 +7,10 @@
 #endif
 
 #include "file_functions.h"
+#include "rule_functions.h"
 #include "utilities.h"
 #include "common.h"
 #include "constants.h"
-#include "CRuleRemove.h"
 using namespace std;
 
 bool isExit = false;
