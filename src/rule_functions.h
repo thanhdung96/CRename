@@ -24,10 +24,10 @@ void createRuleReplace(CRuleReplace& replace, bool& status);
 void createRuleSwitchCase(CRuleSwitchCase& switchCase, bool& status);
 
 // general rule functions
-bool addRule(vector<CRule>* lstRules, AvailableRules chosenRule);
-string ruleShow(vector<CRule>* lstRules, const unsigned& index);
-vector<string>* ruleShowAll(vector<CRule>* lstRules);
-bool ruleRemove(vector<CRule>* lstRules, const unsigned& index);
-size_t ruleRemoveAll(vector<CRule>* lstRules);
+bool addRule(vector<CRule*>* lstRules, AvailableRules chosenRule);
+string ruleShow(vector<CRule*>* lstRules, const unsigned& index);
+vector<string>* ruleShowAll(vector<CRule*>* lstRules);
+bool ruleRemove(vector<CRule*>* lstRules, const unsigned& index);
+size_t ruleRemoveAll(vector<CRule*>* lstRules);
 
 #endif

@@ -1,7 +1,7 @@
 #include "rule_functions.h"
 
 // constructing rule functions
-void createRuleInsert(CRuleInsert& insert, bool& status){
+void createRuleInsert(CRuleInsert* insert, bool& status){
 	unsigned start;
 	cout << "start at: ";
 	cin >> start;
@@ -21,13 +21,13 @@ void createRuleInsert(CRuleInsert& insert, bool& status){
 	cout << "insert what: ";
 	getline(cin, insertWhat);
 	
-	insert.setText(insertWhat);
-	insert.setPosition(start);
+	insert->setText(insertWhat);
+	insert->setPosition(start);
 	
 	status = true;
 }
 
-void createRuleNumbering(CRuleNumber& number, bool& status){
+void createRuleNumbering(CRuleNumber* number, bool& status){
 	unsigned start;
 	cout << "at: ";
 	cin >> start;
@@ -42,12 +42,12 @@ void createRuleNumbering(CRuleNumber& number, bool& status){
 		startPositionRelativeTo = CRuleNumber::Direction::Right;
 	}
 
-	number.setPositionRelativeTo(start, startPositionRelativeTo);
+	number->setPositionRelativeTo(start, startPositionRelativeTo);
 	
 	status = true;
 }
 
-void createRuleRemove(CRuleRemove& remove, bool& status){
+void createRuleRemove(CRuleRemove* remove, bool& status){
 	unsigned start;
 	cout << "start at: ";
 	cin >> start;
@@ -76,14 +76,14 @@ void createRuleRemove(CRuleRemove& remove, bool& status){
 		removeDirection = CRuleRemove::Direction::Right;
 	}
 	
-	remove.setPosition(start, startPositionRelativeTo);
-	remove.setLength(length);
-	remove.setRemoveDirection(removeDirection);
+	remove->setPosition(start, startPositionRelativeTo);
+	remove->setLength(length);
+	remove->setRemoveDirection(removeDirection);
 	
 	status = true;
 }
 
-void createRuleReplace(CRuleReplace& replace, bool& status){
+void createRuleReplace(CRuleReplace* replace, bool& status){
 	string findWhat;
 	cout << "find what: ";
 	getline(cin, findWhat);
@@ -92,13 +92,13 @@ void createRuleReplace(CRuleReplace& replace, bool& status){
 	cout << "replace with: ";
 	getline(cin, replaceWith);
 	
-	replace.setFindWhat(findWhat);
-	replace.setReplaceWith(replaceWith);
+	replace->setFindWhat(findWhat);
+	replace->setReplaceWith(replaceWith);
 	
 	status = true;
 }
 
-void createRuleSwitchCase(CRuleSwitchCase& switchCase, bool& status){
+void createRuleSwitchCase(CRuleSwitchCase* switchCase, bool& status){
 	string strCase;
 	CRuleSwitchCase::StringCase stringCase;
 	cout << "convert to: ";
@@ -112,18 +112,18 @@ void createRuleSwitchCase(CRuleSwitchCase& switchCase, bool& status){
 		stringCase = CRuleSwitchCase::StringCase::Proper_Case;
 	}
 	
-	switchCase.setChangeCaseTo(stringCase);
+	switchCase->setChangeCaseTo(stringCase);
 	
 	status = true;
 }
 
 // general rule functions
-bool addRule(vector<CRule>* lstRules, AvailableRules chosenRule){
+bool addRule(vector<CRule*>* lstRules, AvailableRules chosenRule){
 	bool result = false;
 	
 	switch(chosenRule){
 		case AvailableRules::Insert:{
-			CRuleInsert insert;
+			CRuleInsert* insert = new CRuleInsert;
 			createRuleInsert(insert, result);
 			if(result == true){
 				lstRules->push_back(insert);
@@ -135,7 +135,7 @@ bool addRule(vector<CRule>* lstRules, AvailableRules chosenRule){
 		}
 		
 		case AvailableRules::Numering:{
-			CRuleNumber numbering;
+			CRuleNumber* numbering = new CRuleNumber;
 			createRuleNumbering(numbering, result);
 			if(result == true){
 				lstRules->push_back(numbering);
@@ -147,7 +147,7 @@ bool addRule(vector<CRule>* lstRules, AvailableRules chosenRule){
 
 		}
 		case AvailableRules::Remove:{
-			CRuleRemove remove;
+			CRuleRemove* remove = new CRuleRemove;
 			createRuleRemove(remove, result);
 			if(result == true){
 				lstRules->push_back(remove);
@@ -158,7 +158,7 @@ bool addRule(vector<CRule>* lstRules, AvailableRules chosenRule){
 			break;
 		}
 		case AvailableRules::Replace:{
-			CRuleReplace replace;
+			CRuleReplace* replace = new CRuleReplace;
 			createRuleReplace(replace, result);
 			if(result == true){
 				lstRules->push_back(replace);
@@ -170,7 +170,7 @@ bool addRule(vector<CRule>* lstRules, AvailableRules chosenRule){
 
 		}
 		case AvailableRules::SwitchCase:{
-			CRuleSwitchCase switchCase;
+			CRuleSwitchCase* switchCase = new CRuleSwitchCase;
 			createRuleSwitchCase(switchCase, result);
 			if(result == true){
 				lstRules->push_back(switchCase);
@@ -188,38 +188,46 @@ bool addRule(vector<CRule>* lstRules, AvailableRules chosenRule){
 	return true;
 }
 
-string ruleShow(vector<CRule>* lstRules, const unsigned& index){
+string ruleShow(vector<CRule*>* lstRules, const unsigned& index){
 		if (index < 0 || index >= lstRules->size()){
 		return "";
 	}
 
-	return lstRules->at(index).toString();
+	return lstRules->at(index)->toString();
 }
 
-vector<string>* ruleShowAll(vector<CRule>* lstRules){
+vector<string>* ruleShowAll(vector<CRule*>* lstRules){
 	if (lstRules->size() == 0){
 		return nullptr;
 	}
 
 	vector<string>* lstRuleString = new vector<string>();
 	for (unsigned i = 0; i < lstRules->size(); i++){
-		lstRuleString->push_back(lstRules->at(i).toString());
+		lstRuleString->push_back(lstRules->at(i)->toString());
 	}
 
 	return lstRuleString;
 }
 
-bool ruleRemove(vector<CRule>* lstRules, const unsigned& index){
+bool ruleRemove(vector<CRule*>* lstRules, const unsigned& index){
 	if (index < 0 || index >= lstRules->size()){
 		return false;
 	}
+
+	CRule* ruleToDelete = lstRules->at(index);
 	lstRules->erase(lstRules->begin() + index);
+	delete ruleToDelete;
 	lstRules->shrink_to_fit();
 	return true;
 }
 
-size_t ruleRemoveAll(vector<CRule>* lstRules){
+size_t ruleRemoveAll(vector<CRule*>* lstRules){
 	size_t totalRemoved = lstRules->size();
+
+	for (int i = 0; i< lstRules->size(); i++)
+	{
+		delete lstRules->at(i);
+	}
 	lstRules->clear();
 	lstRules->shrink_to_fit();
 

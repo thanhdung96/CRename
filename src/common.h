@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <unordered_map>
+#include <memory>
 #include "CRule.h"
 
 #ifdef IS_LINUX
@@ -21,6 +22,6 @@ vector<unsigned> intParsedPrompt;
 unordered_map<string, ConstInt> commandMap;
 
 vector<path> lstFiles;
-vector<CRule> lstRules;
+vector<CRule*> lstRules;
 
 #endif // !COMMON_H
