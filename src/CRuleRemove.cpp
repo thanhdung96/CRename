@@ -106,7 +106,7 @@ string CRuleRemove::toString(){
 	str.append(" characters to the ");
 	switch (this->direction)
 	{
-	case CRuleRemove::Direction::Right:
+	case Direction::Right:
 		str.append("right");
 		break;
 	default:

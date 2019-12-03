@@ -7,6 +7,12 @@ using namespace std;
 class CRule
 {
 public:
+	enum Direction{
+		Left = -1,
+		Right = 1
+	};
+
+public:
 	CRule();
 	virtual ~CRule();
 
