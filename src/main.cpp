@@ -173,11 +173,11 @@ void menuRuleActions(){
 }
 
 void menuApplyActions(){
-
+	cout << "do apply here.\n";
 }
 
 void menuPreviewAction(){
-	
+	cout << "do preview here.\n";
 }
 
 bool parsingCommand(string& returnedError){

@@ -3,8 +3,11 @@
 // constructing rule functions
 void createRuleInsert(CRuleInsert* insert, bool& status){
 	unsigned start;
+	string strStart;
 	cout << "start at: ";
-	cin >> start;
+	//cin >> start;
+	getline(cin, strStart);
+	start = stoul(strStart);
 	
 	// TODO implement set position relativity to inserting rule
 	string strStartPositionRelativeTo;
@@ -29,9 +32,12 @@ void createRuleInsert(CRuleInsert* insert, bool& status){
 
 void createRuleNumbering(CRuleNumber* number, bool& status){
 	unsigned start;
-	cout << "at: ";
-	cin >> start;
-	
+	string strStart;
+	cout << "start at: ";
+	//cin >> start;
+	getline(cin, strStart);
+	start = stoul(strStart);
+
 	string strStartPositionRelativeTo;
 	CRuleNumber::Direction startPositionRelativeTo;
 	cout << "from [Left/right]: ";
@@ -49,9 +55,12 @@ void createRuleNumbering(CRuleNumber* number, bool& status){
 
 void createRuleRemove(CRuleRemove* remove, bool& status){
 	unsigned start;
+	string strStart;
 	cout << "start at: ";
-	cin >> start;
-	
+	//cin >> start;
+	getline(cin, strStart);
+	start = stoul(strStart);
+
 	string strStartPositionRelativeTo;
 	CRuleRemove::Direction startPositionRelativeTo;
 	cout << "from [Left/right]: ";

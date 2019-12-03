@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <unordered_map>
-#include <memory>
 #include "CRule.h"
 
 #ifdef IS_LINUX
