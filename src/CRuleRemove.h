@@ -9,10 +9,10 @@ using namespace std;
 class CRuleRemove :public CRule
 {
 public:
-	enum Direction{
-		Left = -1,
-		Right = 1
-	};
+	//enum Direction{
+	//	Left = -1,
+	//	Right = 1
+	//};
 
 public:
 	CRuleRemove();

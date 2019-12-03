@@ -12,15 +12,17 @@ public:
 	CRuleInsert();
 	~CRuleInsert();
 
-	void setPosition(const unsigned& pos);
+	void setPosition(const unsigned& pos, const Direction positionDirectionRelativeTo);
 	void setText(string& newText);
 	string preview(const string& fileName);
 	bool apply(string& fileName);
 	string toString();
 
 private:
+	unsigned storedPosition;	//used to cache user input position to restore when position is changed in makeValid
 	unsigned position;
 	string text;
+	Direction positionDirectionRelativeTo;
 	
 private:
 	void makeValid(unsigned fileNameSize);

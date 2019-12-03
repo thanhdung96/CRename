@@ -6,11 +6,11 @@
 
 class CRuleNumber : public CRule
 {
-public:
-	enum Direction{
-		Left = -1,
-		Right = 1
-	};
+//public:
+//	enum Direction{
+//		Left = -1,
+//		Right = 1
+//	};
 
 	const unsigned INDEX_START = 1;
 

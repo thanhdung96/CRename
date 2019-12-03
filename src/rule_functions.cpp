@@ -11,13 +11,13 @@ void createRuleInsert(CRuleInsert* insert, bool& status){
 	
 	// TODO implement set position relativity to inserting rule
 	string strStartPositionRelativeTo;
-	CRuleRemove::Direction startPositionRelativeTo;
+	CRuleInsert::Direction startPositionRelativeTo;
 	cout << "from [Left/right]: ";
 	getline(cin, strStartPositionRelativeTo);
 	if(strStartPositionRelativeTo.compare("left")){
-		startPositionRelativeTo = CRuleRemove::Direction::Left;
+		startPositionRelativeTo = CRule::Direction::Left;
 	}else{
-		startPositionRelativeTo = CRuleRemove::Direction::Right;
+		startPositionRelativeTo = CRule::Direction::Right;
 	}
 	
 	string insertWhat;
@@ -25,7 +25,7 @@ void createRuleInsert(CRuleInsert* insert, bool& status){
 	getline(cin, insertWhat);
 	
 	insert->setText(insertWhat);
-	insert->setPosition(start);
+	insert->setPosition(start, startPositionRelativeTo);
 	
 	status = true;
 }
@@ -43,9 +43,9 @@ void createRuleNumbering(CRuleNumber* number, bool& status){
 	cout << "from [Left/right]: ";
 	getline(cin, strStartPositionRelativeTo);
 	if(strStartPositionRelativeTo.compare("left")){
-		startPositionRelativeTo = CRuleNumber::Direction::Left;
+		startPositionRelativeTo = CRule::Direction::Left;
 	}else{
-		startPositionRelativeTo = CRuleNumber::Direction::Right;
+		startPositionRelativeTo = CRule::Direction::Right;
 	}
 
 	number->setPositionRelativeTo(start, startPositionRelativeTo);
@@ -66,9 +66,9 @@ void createRuleRemove(CRuleRemove* remove, bool& status){
 	cout << "from [Left/right]: ";
 	getline(cin, strStartPositionRelativeTo);
 	if(strStartPositionRelativeTo.compare("left")){
-		startPositionRelativeTo = CRuleRemove::Direction::Left;
+		startPositionRelativeTo = CRule::Direction::Left;
 	}else{
-		startPositionRelativeTo = CRuleRemove::Direction::Right;
+		startPositionRelativeTo = CRule::Direction::Right;
 	}
 	
 	unsigned length;
@@ -76,13 +76,13 @@ void createRuleRemove(CRuleRemove* remove, bool& status){
 	cin >> length;
 	
 	string strRemoveDirection;
-	CRuleRemove::Direction removeDirection;
+	CRule::Direction removeDirection;
 	cout << "from [Left/right]: ";
 	getline(cin, strRemoveDirection);
 	if(strRemoveDirection.compare("left")){
-		removeDirection = CRuleRemove::Direction::Left;
+		removeDirection = CRule::Direction::Left;
 	}else{
-		removeDirection = CRuleRemove::Direction::Right;
+		removeDirection = CRule::Direction::Right;
 	}
 	
 	remove->setPosition(start, startPositionRelativeTo);
