@@ -27,7 +27,7 @@ public:
 	~CRuleSwitchCase();
 	string preview(const string& fileName);
 	bool apply(string& fileName);
-	string* toString();
+	string toString();
 
 	void setChangeCaseTo(const StringCase& strCase);
 

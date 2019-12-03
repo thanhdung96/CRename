@@ -39,12 +39,12 @@ bool CRuleReplace::apply(string& fileName){
 	return true;
 }
 
-string* CRuleReplace::toString(){
-	string* ret = new string("replace \"");
-	ret->append(this->findWhat);
-	ret->append("\" with \"");
-	ret->append(this->replaceWith);
-	ret->append("\"");
+string CRuleReplace::toString(){
+	string ret = "replace \"";
+	ret.append(this->findWhat);
+	ret.append("\" with \"");
+	ret.append(this->replaceWith);
+	ret.append("\"");
 
 	return ret;
 }

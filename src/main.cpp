@@ -7,10 +7,10 @@
 #endif
 
 #include "file_functions.h"
+#include "rule_functions.h"
 #include "utilities.h"
 #include "common.h"
 #include "constants.h"
-#include "CRuleRemove.h"
 using namespace std;
 
 bool isExit = false;
@@ -95,19 +95,89 @@ void menuFileActions(){
 void menuRuleActions(){
 	switch (intParsedPrompt[1])
 	{
-	case INT_MENU_ACTION_ADD:		//add a rule
+	case INT_MENU_ACTION_ADD:{		//add a rule
+		AvailableRules chosenRule;
+		string strChosenRule;
+		switch(intParsedPrompt[2]){
+			case INT_RULE_INSERT:
+				chosenRule = AvailableRules::Insert;
+				strChosenRule = "insert rule";
+				break;
+			case INT_RULE_NUMBERING:
+				chosenRule = AvailableRules::Numering;
+				strChosenRule = "numbering rule";
+				break;
+			case INT_RULE_REMOVE:
+				chosenRule = AvailableRules::Remove;
+				strChosenRule = "removing rule";
+				break;
+			case INT_RULE_REPLACE:
+				chosenRule = AvailableRules::Replace;
+				strChosenRule = "replacing rule";
+				break;
+			case INT_RULE_CASE_SWITCH:
+				chosenRule = AvailableRules::SwitchCase;
+				strChosenRule = "switching case rule";
+				break;
+		}
+		
+		if(addRule(&lstRules, chosenRule) == true){
+			cout << strChosenRule << " added.\n";
+		} else{
+			cout << "rule addition aborted.\n";
+		}
 		break;
-	case INT_MENU_ACTION_REMOVE:
+	}
+		
+	case INT_MENU_ACTION_REMOVE:{
+		if (intParsedPrompt[2] == INT_PARAMETER_ALL){
+			size_t totalRemoved = ruleRemoveAll(&lstRules);
+			cout << totalRemoved << " rule(s) removed.\n";
+		}
+		else{
+			if (ruleRemove(&lstRules, intParsedPrompt[2])){
+				cout << "[" << intParsedPrompt[2] << "] removed.\n";
+			}
+		}
 		break;
-	case INT_MENU_ACTION_SHOW:
+	}
+	
+	case INT_MENU_ACTION_SHOW:{
+		if (intParsedPrompt[2] == INT_PARAMETER_ALL){
+			vector<string>* lstRuleStrings = ruleShowAll(&lstRules);
+			if (lstRuleStrings == nullptr){
+				cout << "no rules created.\n";
+			}
+			else{
+				for (unsigned i = 0; i < lstRuleStrings->size(); i++){
+					cout << "[" << i << "] " << lstRuleStrings->at(i) << "\n";
+				}
+				delete lstRuleStrings;
+			}
+		}
+		else{
+			string r = ruleShow(&lstRules, intParsedPrompt[2]);
+			if (r.compare("") == 0){
+				cout << "rule index out of range.\n";
+			}
+			else{
+				cout << "[" << intParsedPrompt[2] << "] " << r << "\n";
+			}
+		}
 		break;
+	}
+		
 	default:
 		break;
 	}
 }
 
 void menuApplyActions(){
+	cout << "do apply here.\n";
+}
 
+void menuPreviewAction(){
+	cout << "do preview here.\n";
 }
 
 bool parsingCommand(string& returnedError){
@@ -157,6 +227,9 @@ void prompting(){
 		case INT_MAIN_MENU_APPLY:
 			menuApplyActions();
 			break;
+		case INT_MAIN_MENU_PREVIEW:
+			menuPreviewAction();
+			break;
 		default:	//default case is help
 			break;
 		}
@@ -177,6 +250,13 @@ void preparingCommandsMap(){
 	commandMap.insert(pair<string, ConstInt>(MENU_ACTION_SHOW, INT_MENU_ACTION_SHOW));
 
 	commandMap.insert(pair<string, ConstInt>(PARAMETER_ALL, INT_PARAMETER_ALL));
+	
+	commandMap.insert(pair<string, ConstInt>(RULE_INSERT, INT_RULE_INSERT));
+	commandMap.insert(pair<string, ConstInt>(RULE_NUMBERING, INT_RULE_NUMBERING));
+	commandMap.insert(pair<string, ConstInt>(RULE_REMOVE, INT_RULE_REMOVE));
+	commandMap.insert(pair<string, ConstInt>(RULE_REPLACE, INT_RULE_REPLACE));
+	commandMap.insert(pair<string, ConstInt>(RULE_CASE_SWITCH, INT_RULE_CASE_SWITCH));
+
 }
 
 int main() {

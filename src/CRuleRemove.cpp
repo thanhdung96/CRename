@@ -95,28 +95,28 @@ void CRuleRemove::makeValid(size_t fileNameSize){
 	}
 }
 
-string* CRuleRemove::toString(){
-	string* str = new string("remove ");
+string CRuleRemove::toString(){
+	string str = "remove ";
 	string temp;
 	stringstream ss;
 
 	ss << this->length;
 	ss >> temp;
-	str->append(temp);
-	str->append(" characters to the ");
+	str.append(temp);
+	str.append(" characters to the ");
 	switch (this->direction)
 	{
-	case CRuleRemove::Direction::Right:
-		str->append("right");
+	case Direction::Right:
+		str.append("right");
 		break;
 	default:
-		str->append("left");
+		str.append("left");
 		break;
 	}
-	str->append(" from position ");
+	str.append(" from position ");
 	ss << this->position;
 	ss >> temp;
-	str->append(temp);
+	str.append(temp);
 
 	return str;
 }

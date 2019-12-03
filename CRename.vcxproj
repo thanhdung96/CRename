@@ -88,6 +88,7 @@
     <ClCompile Include="src\CRuleSwitchCase.cpp" />
     <ClCompile Include="src\file_functions.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\rule_functions.cpp" />
     <ClCompile Include="src\utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +101,7 @@
     <ClInclude Include="src\CRuleReplace.h" />
     <ClInclude Include="src\CRuleSwitchCase.h" />
     <ClInclude Include="src\file_functions.h" />
+    <ClInclude Include="src\rule_functions.h" />
     <ClInclude Include="src\utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -4,14 +4,19 @@ CRuleInsert::CRuleInsert()
 {
 	text = "";
 	this->position = 0;
+	position = 0;
+	positionDirectionRelativeTo = Direction::Left;
+
 }
 
 CRuleInsert::~CRuleInsert()
 {
 }
 
-void CRuleInsert::setPosition(const unsigned& pos){
-	this->position = pos;
+void CRuleInsert::setPosition(const unsigned& pos, const Direction positionDirectionRelativeTo){
+	this->positionDirectionRelativeTo = positionDirectionRelativeTo;
+	this->position = position;
+	this->storedPosition = position;
 }
 
 void CRuleInsert::setText(string& newText){
@@ -43,24 +48,41 @@ string CRuleInsert::preview(const string& fileName){
 
 // make rule configuration valid for each file name applied
 void CRuleInsert::makeValid(unsigned fileNameSize) {
-	if(position < 0){
+	//adjusting position to make it in range of string length
+	if (position < 0){
 		position = 0;
 	}
-	if(position > fileNameSize){
+	else if (position > fileNameSize){
 		position = fileNameSize;
+	}
+	else{
+		//if position relative to the left, do nothing
+		// else convert it to position relative to the left
+		position = positionDirectionRelativeTo == Direction::Right ? fileNameSize - storedPosition : storedPosition;
 	}
 }
 
-string* CRuleInsert::toString(){
+string CRuleInsert::toString(){
 	stringstream ss;
 	string temp;
-	string* str = new string("insert \"");
+	string str = "insert \"";
 
-	str->append(text);
-	str->append("\" at ");
+	str.append(text);
+	str.append("\" at ");
 	ss << this->position;
 	ss >> temp;
-	str->append(temp);
+	str.append(temp);
+
+	str.append(" from the ");
+	switch (this->positionDirectionRelativeTo)
+	{
+	case Direction::Right:
+		str.append("right");
+		break;
+	default:
+		str.append("left");
+		break;
+	}
 
 	return str;
 }

@@ -47,24 +47,24 @@ bool CRuleNumber::apply(string& fileName){
 	return true;
 }
 
-string* CRuleNumber::toString(){
-	string* ret = new string("insert index at ");
+string CRuleNumber::toString(){
+	string ret = "insert index at ";
 
 	stringstream stringStream;
 	stringStream << position;
 	string temp;
 	stringStream >> temp;
-	ret->append(temp);
+	ret.append(temp);
 
-	ret->append(" characters away from the ");
+	ret.append(" characters away from the ");
 
 	switch (positionRelativeTo)
 	{
 	case CRuleNumber::Left:
-		ret->append("left");
+		ret.append("left");
 		break;
 	case CRuleNumber::Right:
-		ret->append("right");
+		ret.append("right");
 		break;
 	default:
 		break;

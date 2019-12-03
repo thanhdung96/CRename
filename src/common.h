@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <unordered_map>
+#include "CRule.h"
 
 #ifdef IS_LINUX
 	#include <boost/filesystem.hpp>
@@ -19,7 +20,7 @@ string endParameter;
 vector<unsigned> intParsedPrompt;
 unordered_map<string, ConstInt> commandMap;
 
-vector<path> lstFiles;	//temporary file list using string
-vector<string> lstRules;	//temporary rule list using string
+vector<path> lstFiles;
+vector<CRule*> lstRules;
 
 #endif // !COMMON_H

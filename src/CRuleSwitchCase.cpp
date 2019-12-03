@@ -29,21 +29,21 @@ bool CRuleSwitchCase::apply(string& fileName){
 	return true;
 }
 
-string* CRuleSwitchCase::toString(){
-	string* ret = new string("convert to ");
+string CRuleSwitchCase::toString(){
+	string ret = "convert to ";
 	switch (strCase)
 	{
 	case StringCase::Lower_Case:
-		ret->append("lower case");
+		ret.append("lower case");
 		break;
 	case StringCase::Upper_Case:
-		ret->append("upper case");
+		ret.append("upper case");
 		break;
 	default:
-		ret->append("proper case");
+		ret.append("proper case");
 		break;
 	}
-	return nullptr;
+	return ret;
 }
 
 void CRuleSwitchCase::setChangeCaseTo(const StringCase& strCase){

@@ -44,4 +44,17 @@ ConstInt INT_MENU_ACTION_SHOW = 103;
 string PARAMETER_ALL = "all";
 
 ConstInt INT_PARAMETER_ALL = 200;
+
+string RULE_INSERT = "insert";
+string RULE_NUMBERING = "numbering";
+string RULE_REMOVE = "remove";
+string RULE_REPLACE = "replace";
+string RULE_CASE_SWITCH = "case_conv";
+
+ConstInt INT_RULE_INSERT = 300;
+ConstInt INT_RULE_NUMBERING = 301;
+ConstInt INT_RULE_REMOVE = 302;
+ConstInt INT_RULE_REPLACE = 303;
+ConstInt INT_RULE_CASE_SWITCH = 304;
+
 #endif // !CONSTANTS_H
