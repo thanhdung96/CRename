@@ -20,7 +20,12 @@ string endParameter;
 vector<unsigned> intParsedPrompt;
 unordered_map<string, ConstInt> commandMap;
 
-vector<path> lstFiles;
+vector<path> lstFiles;				// list of file temporarily stored after import
+vector<path> lstAbsolutePath;		// resolve to absolute path
+vector<path> lstResolvedFileName;	// extract file name and extension only
+vector<path> lstNewFileName;
+
 vector<CRule*> lstRules;
+
 
 #endif // !COMMON_H

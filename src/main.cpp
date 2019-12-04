@@ -31,6 +31,7 @@ void menuFileActions(){
 				cout << "empty directory.\n";
 			}
 			else{
+				resolveToAbsolute(&lstFiles, &lstAbsolutePath, &lstResolvedFileName);
 				cout << "imported " << count << " files.\n";
 			}
 		}
@@ -44,18 +45,21 @@ void menuFileActions(){
 		if (!addFile(&lstFiles, pth)){
 			cout << ADD_FILE_FAILED;
 		}
-		cout << "added 1 file.\n";
+		else{
+			resolveToAbsolute(&lstFiles, &lstAbsolutePath, &lstResolvedFileName);
+			cout << "added 1 file.\n";
+		}
 		pth = "";	//reset path for next import or addition
 		break;
 	}
 
 	case INT_MENU_ACTION_REMOVE:{
 		if (intParsedPrompt[2] == INT_PARAMETER_ALL){
-			size_t totalRemoved = fileRemoveAll(&lstFiles);
+			size_t totalRemoved = fileRemoveAll(&lstFiles, &lstAbsolutePath, &lstResolvedFileName);
 			cout << totalRemoved << " file(s) removed.\n";
 		}
 		else{
-			if (fileRemove(&lstFiles, intParsedPrompt[2])){
+			if (fileRemove(&lstFiles, &lstAbsolutePath, &lstResolvedFileName, intParsedPrompt[2])){
 				cout << "[" << intParsedPrompt[2] << "] removed.\n";
 			}
 		}

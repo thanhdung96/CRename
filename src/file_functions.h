@@ -14,5 +14,8 @@ bool fileImportDirectory(vector<path>* lstFile, const string pth, unsigned& coun
 bool addFile(vector<path>* lstFile, const string pth);
 string fileShow(vector<path>* lstFile, const unsigned& index);
 vector<string>* fileShowAll(vector<path>* lstFile);
-bool fileRemove(vector<path>* lstFile, const unsigned& index);
-size_t fileRemoveAll(vector<path>* lstFile);
+bool fileRemove(vector<path>* lstFile, vector<path>* lstAbsolutePath, vector<path>* lstResolvedFileName, const unsigned& index);
+size_t fileRemoveAll(vector<path>* lstFile, vector<path>* lstAbsolutePath, vector<path>* lstResolvedFileName);
+
+void resolveToAbsolute(vector<path>* lstFile, vector<path>* lstAbsolutePath, vector<path>* lstResolvedFileName);
+void removeElementFromList(vector<path>* lstFile, vector<path>* lstAbsolutePath, vector<path>* lstResolvedFileName, const int& index = -1);
