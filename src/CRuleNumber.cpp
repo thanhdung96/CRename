@@ -13,6 +13,7 @@ CRuleNumber::~CRuleNumber()
 }
 
 string CRuleNumber::preview(const string& fileName){
+	resetIndex();
 	if (fileName.compare("") == 0){
 		return "";
 	}
@@ -31,6 +32,7 @@ string CRuleNumber::preview(const string& fileName){
 }
 
 bool CRuleNumber::apply(string& fileName){
+	resetIndex();
 	if (fileName.compare("") == 0){
 		return false;
 	}
@@ -89,7 +91,8 @@ void CRuleNumber::makeValid(const unsigned& fileNameSize){
 		position = 0;
 	}
 	else if (position > fileNameSize){
-		position = fileNameSize;
+		//position = fileNameSize;
+		position = positionRelativeTo == Direction::Right ? fileNameSize - storedPosition : storedPosition;
 	}
 	else{
 		//if position relative to the left, do nothing

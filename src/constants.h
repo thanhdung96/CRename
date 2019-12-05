@@ -45,10 +45,10 @@ string PARAMETER_ALL = "all";
 
 ConstInt INT_PARAMETER_ALL = 200;
 
-string RULE_INSERT = "insert";
+string RULE_INSERT = "inserting";
 string RULE_NUMBERING = "numbering";
-string RULE_REMOVE = "remove";
-string RULE_REPLACE = "replace";
+string RULE_REMOVE = "removing";
+string RULE_REPLACE = "replacing";
 string RULE_CASE_SWITCH = "case_conv";
 
 ConstInt INT_RULE_INSERT = 300;

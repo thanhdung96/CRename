@@ -180,8 +180,27 @@ void menuApplyActions(){
 	cout << "do apply here.\n";
 }
 
-void menuPreviewAction(){
-	cout << "do preview here.\n";
+vector<string>* menuPreviewAction(){
+	if (lstFiles.size() == 0){
+		cout << "no file(s) to be previewed.\n";
+		return nullptr;
+	}
+	if (lstRules.size() == 0){
+		cout << "no rule(s) to be previewed.\n";
+		return nullptr;
+	}
+
+	vector<string>* lstPreviewString = new vector<string>();
+	string previewString;
+	for (unsigned i = 0; i < lstResolvedFileName.size(); i++){
+		previewString = lstResolvedFileName.at(i).string();
+		for (unsigned j = 0; j < lstRules.size(); j++){
+			previewString = lstRules.at(j)->preview(previewString);
+		}
+		cout << "[" << i << "] " << previewString << "\n";
+	}
+
+	return lstPreviewString;
 }
 
 bool parsingCommand(string& returnedError){
@@ -270,6 +289,10 @@ int main() {
 	while(!isExit){
 		prompting();
 	}
+
+	// rule list uses pointers to rules, it should be deallocated before exiting
+	ruleRemoveAll(&lstRules);
+
 	cout << "bye!\n";
     return 0;
 }

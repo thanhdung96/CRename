@@ -14,7 +14,7 @@ void createRuleInsert(CRuleInsert* insert, bool& status){
 	CRuleInsert::Direction startPositionRelativeTo;
 	cout << "from [Left/right]: ";
 	getline(cin, strStartPositionRelativeTo);
-	if(strStartPositionRelativeTo.compare("left")){
+	if(strStartPositionRelativeTo.compare("left") == 0){
 		startPositionRelativeTo = CRule::Direction::Left;
 	}else{
 		startPositionRelativeTo = CRule::Direction::Right;
@@ -42,7 +42,7 @@ void createRuleNumbering(CRuleNumber* number, bool& status){
 	CRuleNumber::Direction startPositionRelativeTo;
 	cout << "from [Left/right]: ";
 	getline(cin, strStartPositionRelativeTo);
-	if(strStartPositionRelativeTo.compare("left")){
+	if (strStartPositionRelativeTo.compare("left") == 0){
 		startPositionRelativeTo = CRule::Direction::Left;
 	}else{
 		startPositionRelativeTo = CRule::Direction::Right;
@@ -65,21 +65,23 @@ void createRuleRemove(CRuleRemove* remove, bool& status){
 	CRuleRemove::Direction startPositionRelativeTo;
 	cout << "from [Left/right]: ";
 	getline(cin, strStartPositionRelativeTo);
-	if(strStartPositionRelativeTo.compare("left")){
+	if (strStartPositionRelativeTo.compare("left") == 0){
 		startPositionRelativeTo = CRule::Direction::Left;
 	}else{
 		startPositionRelativeTo = CRule::Direction::Right;
 	}
 	
 	unsigned length;
+	string strLength;
 	cout << "number of characters to remove: ";
-	cin >> length;
-	
+	getline(cin, strLength);
+	length = stoul(strLength);
+
 	string strRemoveDirection;
 	CRule::Direction removeDirection;
-	cout << "from [Left/right]: ";
+	cout << "to [Left/right]: ";
 	getline(cin, strRemoveDirection);
-	if(strRemoveDirection.compare("left")){
+	if (strRemoveDirection.compare("left") == 0){
 		removeDirection = CRule::Direction::Left;
 	}else{
 		removeDirection = CRule::Direction::Right;
@@ -113,11 +115,13 @@ void createRuleSwitchCase(CRuleSwitchCase* switchCase, bool& status){
 	cout << "convert to: ";
 	getline(cin, strCase);
 	
-	if(strCase.compare("uppercase")){
+	if(strCase.compare("uppercase") == 0){
 		stringCase = CRuleSwitchCase::StringCase::Upper_Case;
-	}else if(strCase.compare("lowercase")){
+	}
+	else if (strCase.compare("lowercase") == 0){
 		stringCase = CRuleSwitchCase::StringCase::Lower_Case;
-	}else if(strCase.compare("propercase")){
+	}
+	else if (strCase.compare("propercase") == 0){
 		stringCase = CRuleSwitchCase::StringCase::Proper_Case;
 	}
 	
@@ -233,7 +237,7 @@ bool ruleRemove(vector<CRule*>* lstRules, const unsigned& index){
 size_t ruleRemoveAll(vector<CRule*>* lstRules){
 	size_t totalRemoved = lstRules->size();
 
-	for (int i = 0; i< lstRules->size(); i++)
+	for (unsigned i = 0; i< lstRules->size(); i++)
 	{
 		delete lstRules->at(i);
 	}

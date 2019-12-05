@@ -3,6 +3,7 @@
 CRuleRemove::CRuleRemove()
 {
 	position = 0;
+	storedPosition = 0;
 	length = 0;
 	direction = Direction::Right;
 	positionDirectionRelativeTo = Direction::Left;
@@ -70,8 +71,9 @@ void CRuleRemove::makeValid(size_t fileNameSize){
 	if(position < 0){
 		position= 0;
 	}
-	else if(position > fileNameSize){
-		position = fileNameSize;
+	else if (position > fileNameSize){
+		//position = fileNameSize;
+		position = positionDirectionRelativeTo == Direction::Right ? fileNameSize - storedPosition : storedPosition;
 	}
 	else{
 		//if position relative to the left, do nothing
@@ -83,7 +85,7 @@ void CRuleRemove::makeValid(size_t fileNameSize){
 		//adjusting length value
 		// if the length makes the removal out of index of string, set it equal to the rest of the string based on direction
 		case Direction::Left:
-			if(position - length < 0){
+			if(((int)position - (int)length) < 0){
 				length = position;
 			}
 			break;
