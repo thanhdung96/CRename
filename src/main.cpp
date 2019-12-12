@@ -195,16 +195,16 @@ bool menuApplyActions(){
 		lstNewFileName.push_back(newName);
 	}
 	
-	for(unsigned i=0;i<lstAbsolutePath.size();i++){
-		path oldAbsolutePath(lstAbsolutePath.at(i).concat(lstResolvedFileName.at(i).string()));
-		path newAboslutePath(lstAbsolutePath.at(i).concat(lstNewFileName.at(i).string()));
-		cout << oldAbsolutePath << "\n";
-		cout << newAboslutePath << "\n";
-		//rename(oldAbsolutePath, newAboslutePath);
+	for(unsigned i=0; i<lstAbsolutePath.size(); i++){
+		path oldAbsolutePath(canonical(lstResolvedFileName.at(i)));
+		path newAboslutePath(absolute(lstNewFileName.at(i)));
+		
+		rename(oldAbsolutePath, newAboslutePath);
 	}
-	
+
 	lstNewFileName.clear();
 	lstNewFileName.shrink_to_fit();
+	cout << "applied.\n";
 	return true;
 }
 
@@ -332,3 +332,4 @@ int main() {
 	cout << "bye!\n";
     return 0;
 }
+
