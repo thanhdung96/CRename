@@ -53,7 +53,8 @@ void CRuleInsert::makeValid(unsigned fileNameSize) {
 		position = 0;
 	}
 	else if (position > fileNameSize){
-		position = fileNameSize;
+		//position = fileNameSize;
+		position = positionDirectionRelativeTo == Direction::Right ? fileNameSize - storedPosition : storedPosition;
 	}
 	else{
 		//if position relative to the left, do nothing

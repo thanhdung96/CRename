@@ -68,7 +68,7 @@ void menuFileActions(){
 
 	case INT_MENU_ACTION_SHOW:{
 		if (intParsedPrompt[2] == INT_PARAMETER_ALL){
-			vector<string>* lstFileStrings = fileShowAll(&lstFiles);
+			vector<string>* lstFileStrings = fileShowAll(&lstResolvedFileName);
 			if (lstFileStrings == nullptr){
 				cout << "no files imported.\n";
 			}
@@ -80,7 +80,7 @@ void menuFileActions(){
 			}
 		}
 		else{
-			string f = fileShow(&lstFiles, intParsedPrompt[2]);
+			string f = fileShow(&lstResolvedFileName, intParsedPrompt[2]);
 			if (f.compare("") == 0){
 				cout << "file index out of range.\n";
 			}
@@ -176,12 +176,59 @@ void menuRuleActions(){
 	}
 }
 
-void menuApplyActions(){
-	cout << "do apply here.\n";
+bool menuApplyActions(){
+	if (lstFiles.size() == 0){
+		cout << "no file(s) to be applied.\n";
+		return false;
+	}
+	if (lstRules.size() == 0){
+		cout << "no rule(s) to be applied.\n";
+		return false;
+	}
+	
+	string newName;
+	for (unsigned i = 0; i < lstResolvedFileName.size(); i++){
+		newName = lstResolvedFileName.at(i).string();
+		for (unsigned j = 0; j < lstRules.size(); j++){
+			newName = lstRules.at(j)->preview(newName);
+		}
+		lstNewFileName.push_back(newName);
+	}
+	
+	for(unsigned i=0;i<lstAbsolutePath.size();i++){
+		path oldAbsolutePath(lstAbsolutePath.at(i).concat(lstResolvedFileName.at(i).string()));
+		path newAboslutePath(lstAbsolutePath.at(i).concat(lstNewFileName.at(i).string()));
+		cout << oldAbsolutePath << "\n";
+		cout << newAboslutePath << "\n";
+		//rename(oldAbsolutePath, newAboslutePath);
+	}
+	
+	lstNewFileName.clear();
+	lstNewFileName.shrink_to_fit();
+	return true;
 }
 
-void menuPreviewAction(){
-	cout << "do preview here.\n";
+vector<string>* menuPreviewAction(){
+	if (lstFiles.size() == 0){
+		cout << "no file(s) to be previewed.\n";
+		return nullptr;
+	}
+	if (lstRules.size() == 0){
+		cout << "no rule(s) to be previewed.\n";
+		return nullptr;
+	}
+
+	vector<string>* lstPreviewString = new vector<string>();
+	string previewString;
+	for (unsigned i = 0; i < lstResolvedFileName.size(); i++){
+		previewString = lstResolvedFileName.at(i).string();
+		for (unsigned j = 0; j < lstRules.size(); j++){
+			previewString = lstRules.at(j)->preview(previewString);
+		}
+		lstPreviewString->push_back(previewString);
+	}
+
+	return lstPreviewString;
 }
 
 bool parsingCommand(string& returnedError){
@@ -231,9 +278,17 @@ void prompting(){
 		case INT_MAIN_MENU_APPLY:
 			menuApplyActions();
 			break;
-		case INT_MAIN_MENU_PREVIEW:
-			menuPreviewAction();
+			
+		case INT_MAIN_MENU_PREVIEW:{
+			vector<string>* lstPreviewString = menuPreviewAction();
+			
+			for(unsigned i=0;i<lstPreviewString->size();i++){
+				cout << "[" << i << "]" << lstPreviewString->at(i) << "\n";
+			}
+			delete lstPreviewString;
 			break;
+		}
+		
 		default:	//default case is help
 			break;
 		}
@@ -270,6 +325,10 @@ int main() {
 	while(!isExit){
 		prompting();
 	}
+
+	// rule list uses pointers to rules, it should be deallocated before exiting
+	ruleRemoveAll(&lstRules);
+
 	cout << "bye!\n";
     return 0;
 }
