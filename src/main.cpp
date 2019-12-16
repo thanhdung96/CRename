@@ -282,8 +282,10 @@ void prompting(){
 		case INT_MAIN_MENU_PREVIEW:{
 			vector<string>* lstPreviewString = menuPreviewAction();
 			
-			for(unsigned i=0;i<lstPreviewString->size();i++){
-				cout << "[" << i << "]" << lstPreviewString->at(i) << "\n";
+			if (lstPreviewString != nullptr) {
+				for (unsigned i = 0; i < lstPreviewString->size(); i++) {
+					cout << "[" << i << "]" << lstPreviewString->at(i) << "\n";
+				}
 			}
 			delete lstPreviewString;
 			break;
