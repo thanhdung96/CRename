@@ -195,11 +195,15 @@ bool menuApplyActions(){
 		lstNewFileName.push_back(newName);
 	}
 	
+#ifdef IS_LINUX
+	char separator = '/';
+#else
+	char separator = '\\';
+#endif
 	for(unsigned i=0; i<lstAbsolutePath.size(); i++){
-		path oldAbsolutePath(canonical(lstResolvedFileName.at(i)));
-		path newAboslutePath(absolute(lstNewFileName.at(i)));
-		
-		rename(oldAbsolutePath, newAboslutePath);
+		path oldAbsolutePath(canonical(lstAbsolutePath.at(i).string()).string() + separator + lstResolvedFileName.at(i).string());
+		path newAbsolutePath(canonical(lstAbsolutePath.at(i).string()).string() + separator + lstNewFileName.at(i).string());
+		rename(oldAbsolutePath, newAbsolutePath);
 	}
 
 	lstNewFileName.clear();
