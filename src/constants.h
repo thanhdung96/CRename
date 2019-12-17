@@ -35,15 +35,23 @@ string MENU_ACTION_IMPORT = "import";
 string MENU_ACTION_ADD = "add";
 string MENU_ACTION_REMOVE = "remove";
 string MENU_ACTION_SHOW = "show";
+string MENU_ACTION_MOVE = "move";
 
 ConstInt INT_MENU_ACTION_IMPORT = 100;
 ConstInt INT_MENU_ACTION_ADD = 101;
 ConstInt INT_MENU_ACTION_REMOVE = 102;
 ConstInt INT_MENU_ACTION_SHOW = 103;
+ConstInt INT_MENU_ACTION_MOVE = 104;
 
 string PARAMETER_ALL = "all";
+string PARAMETER_TO = "to";
+string PARAMETER_END = "end";
+string PARAMETER_FIRST = "first";
 
 ConstInt INT_PARAMETER_ALL = 200;
+ConstInt INT_PARAMETER_TO = 201;
+ConstInt INT_PARAMETER_END = 202;
+ConstInt INT_PARAMETER_FIRST = 203;
 
 string RULE_INSERT = "inserting";
 string RULE_NUMBERING = "numbering";
