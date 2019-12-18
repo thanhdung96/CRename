@@ -102,35 +102,39 @@ void menuRuleActions(){
 	case INT_MENU_ACTION_ADD:{		//add a rule
 		AvailableRules chosenRule;
 		string strChosenRule;
-		switch(intParsedPrompt[2]){
-			case INT_RULE_INSERT:
-				chosenRule = AvailableRules::Insert;
-				strChosenRule = "insert rule";
-				break;
-			case INT_RULE_NUMBERING:
-				chosenRule = AvailableRules::Numering;
-				strChosenRule = "numbering rule";
-				break;
-			case INT_RULE_REMOVE:
-				chosenRule = AvailableRules::Remove;
-				strChosenRule = "removing rule";
-				break;
-			case INT_RULE_REPLACE:
-				chosenRule = AvailableRules::Replace;
-				strChosenRule = "replacing rule";
-				break;
-			case INT_RULE_CASE_SWITCH:
-				chosenRule = AvailableRules::SwitchCase;
-				strChosenRule = "switching case rule";
-				break;
-		}
-		
-		if(addRule(&lstRules, chosenRule) == true){
-			cout << strChosenRule << " added.\n";
+		if(intParsedPrompt.size() == 3){
+			switch(intParsedPrompt[2]){
+				case INT_RULE_INSERT:
+					chosenRule = AvailableRules::Insert;
+					strChosenRule = "insert rule";
+					break;
+				case INT_RULE_NUMBERING:
+					chosenRule = AvailableRules::Numering;
+					strChosenRule = "numbering rule";
+					break;
+				case INT_RULE_REMOVE:
+					chosenRule = AvailableRules::Remove;
+					strChosenRule = "removing rule";
+					break;
+				case INT_RULE_REPLACE:
+					chosenRule = AvailableRules::Replace;
+					strChosenRule = "replacing rule";
+					break;
+				case INT_RULE_CASE_SWITCH:
+					chosenRule = AvailableRules::SwitchCase;
+					strChosenRule = "switching case rule";
+					break;
+			}
+			
+			if(addRule(&lstRules, chosenRule) == true){
+				cout << strChosenRule << " added.\n";
+			} else{
+				cout << "rule addition aborted.\n";
+			}
+			break;
 		} else{
-			cout << "rule addition aborted.\n";
+			cout << "please specify a rule type.\n";
 		}
-		break;
 	}
 		
 	case INT_MENU_ACTION_REMOVE:{
@@ -262,41 +266,45 @@ void prompting(){
 	string returnedError;
 	cout << PROMPT_GREETER;
 	getline(cin, promptInput);
-	bool status = parsingCommand(returnedError);
+	boost::trim_all(promptInput);
 	
-	if (status == PARSE_FAILED){
-		cout << PARSE_FAILURE_NOTIFICATION << returnedError << "\n";
-	}
-	else{
-		switch (intParsedPrompt.at(0))
-		{
-		case INT_MAIN_MENU_EXIT:
-			isExit = true;
-			break;
-		case INT_MAIN_MENU_FILE:
-			menuFileActions();
-			break;
-		case INT_MAIN_MENU_RULE:
-			menuRuleActions();
-			break;
-		case INT_MAIN_MENU_APPLY:
-			menuApplyActions();
-			break;
-			
-		case INT_MAIN_MENU_PREVIEW:{
-			vector<string>* lstPreviewString = menuPreviewAction();
-			
-			if (lstPreviewString != nullptr) {
-				for (unsigned i = 0; i < lstPreviewString->size(); i++) {
-					cout << "[" << i << "]" << lstPreviewString->at(i) << "\n";
-				}
-			}
-			delete lstPreviewString;
-			break;
-		}
+	if(promptInput.length() > 0){
+		bool status = parsingCommand(returnedError);
 		
-		default:	//default case is help
-			break;
+		if (status == PARSE_FAILED){
+			cout << PARSE_FAILURE_NOTIFICATION << returnedError << "\n";
+		}
+		else{
+			switch (intParsedPrompt.at(0))
+			{
+			case INT_MAIN_MENU_EXIT:
+				isExit = true;
+				break;
+			case INT_MAIN_MENU_FILE:
+				menuFileActions();
+				break;
+			case INT_MAIN_MENU_RULE:
+				menuRuleActions();
+				break;
+			case INT_MAIN_MENU_APPLY:
+				menuApplyActions();
+				break;
+				
+			case INT_MAIN_MENU_PREVIEW:{
+				vector<string>* lstPreviewString = menuPreviewAction();
+				
+				if (lstPreviewString != nullptr) {
+					for (unsigned i = 0; i < lstPreviewString->size(); i++) {
+						cout << "[" << i << "]" << lstPreviewString->at(i) << "\n";
+					}
+				}
+				delete lstPreviewString;
+				break;
+			}
+			
+			default:	//default case is help
+				break;
+			}
 		}
 	}
 }
