@@ -17,11 +17,11 @@ enum AvailableRules{
 	SwitchCase
 };
 // constructing rule functions
-void createRuleInsert(CRuleInsert& insert, bool& status);
-void createRuleNumbering(CRuleNumber& number, bool& status);
-void createRuleRemove(CRuleRemove& remove, bool& status);
-void createRuleReplace(CRuleReplace& replace, bool& status);
-void createRuleSwitchCase(CRuleSwitchCase& switchCase, bool& status);
+void createRuleInsert(CRuleInsert* insert, bool& status);
+void createRuleNumbering(CRuleNumber* number, bool& status);
+void createRuleRemove(CRuleRemove* remove, bool& status);
+void createRuleReplace(CRuleReplace* replace, bool& status);
+void createRuleSwitchCase(CRuleSwitchCase* switchCase, bool& status);
 
 // general rule functions
 bool addRule(vector<CRule*>* lstRules, AvailableRules chosenRule);
