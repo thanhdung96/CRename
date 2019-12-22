@@ -1,3 +1,6 @@
+#ifndef FILE_FUNCTIONS_H_INCLUDED
+#define FILE_FUNCTIONS_H_INCLUDED
+
 #ifdef IS_LINUX
 	#include <boost/filesystem.hpp>
 #else
@@ -19,3 +22,5 @@ size_t fileRemoveAll(vector<path>* lstFile, vector<path>* lstAbsolutePath, vecto
 
 void resolveToAbsolute(vector<path>* lstFile, vector<path>* lstAbsolutePath, vector<path>* lstResolvedFileName);
 void removeElementFromList(vector<path>* lstFile, vector<path>* lstAbsolutePath, vector<path>* lstResolvedFileName, const int& index = -1);
+
+#endif // FILE_FUNCTIONS_H_INCLUDED
