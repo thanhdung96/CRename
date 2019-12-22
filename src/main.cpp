@@ -91,6 +91,26 @@ void menuFileActions(){
 		break;
 	}
 
+	case INT_MENU_ACTION_MOVE:{
+		switch(intParsedPrompt[3]){		// destination parameter
+			case INT_PARAMETER_END:{
+				fileMove(lstFiles, lstAbsolutePath, lstResolvedFileName, intParsedPrompt[2], lstRules.size() - 1);
+				break;
+			}
+			
+			case INT_PARAMETER_FIRST:{
+				fileMove(lstFiles, lstAbsolutePath, lstResolvedFileName, intParsedPrompt[2], 0);
+				break;
+			}
+			
+			case INT_PARAMETER_TO:{
+				fileMove(lstFiles, lstAbsolutePath, lstResolvedFileName, intParsedPrompt[2], intParsedPrompt[4]);
+				break;
+			}
+		}
+		break;
+	}
+	
 	default:
 		break;
 	}
