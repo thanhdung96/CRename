@@ -23,6 +23,7 @@ void menuFileActions(){
 		unsigned count = 0;
 		cout << IMPORT_PROMPT;
 		getline(cin, pth);
+		resolveHome(pth);
 		if (!fileImportDirectory(&lstFiles, pth, count)){
 			cout << IMPORT_DIRECTORY_FAILED;
 		}
@@ -42,6 +43,7 @@ void menuFileActions(){
 	case INT_MENU_ACTION_ADD:{		//add a file
 		cout << IMPORT_PROMPT;
 		getline(cin, pth);
+		resolveHome(pth);
 		if (!addFile(&lstFiles, pth)){
 			cout << ADD_FILE_FAILED;
 		}

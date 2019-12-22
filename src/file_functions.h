@@ -7,6 +7,14 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <cstdlib>
+
+#ifdef IS_LINUX
+	#include <boost/algorithm/string/replace.hpp>
+#else
+	#include <boost\algorithm\string\replace.hpp>
+#endif
+
 using namespace std;
 using namespace boost::filesystem;
 
@@ -19,3 +27,4 @@ size_t fileRemoveAll(vector<path>* lstFile, vector<path>* lstAbsolutePath, vecto
 
 void resolveToAbsolute(vector<path>* lstFile, vector<path>* lstAbsolutePath, vector<path>* lstResolvedFileName);
 void removeElementFromList(vector<path>* lstFile, vector<path>* lstAbsolutePath, vector<path>* lstResolvedFileName, const int& index = -1);
+void resolveHome(string& pth);
