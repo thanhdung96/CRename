@@ -1,3 +1,6 @@
+#ifndef FILE_FUNCTIONS_H_INCLUDED
+#define FILE_FUNCTIONS_H_INCLUDED
+
 #ifdef IS_LINUX
 	#include <boost/filesystem.hpp>
 #else
@@ -29,3 +32,6 @@ void fileMove(vector<path>& lstFiles, vector<path>& lstAbsolutePath, vector<path
 void resolveToAbsolute(vector<path>* lstFile, vector<path>* lstAbsolutePath, vector<path>* lstResolvedFileName);
 void removeElementFromList(vector<path>* lstFile, vector<path>* lstAbsolutePath, vector<path>* lstResolvedFileName, const int& index = -1);
 void resolveHome(string& pth);
+
+#endif // FILE_FUNCTIONS_H_INCLUDED
+
