@@ -126,3 +126,10 @@ void removeElementFromList(vector<path>* lstFile, vector<path>* lstAbsolutePath,
 		lstResolvedFileName->shrink_to_fit();
 	}
 }
+
+void resolveHome(string& pth){
+	if(pth.at(0) == '~'){
+		string homePath = getenv("HOME");
+		boost::replace_first(pth, "~", homePath);
+	}
+}
