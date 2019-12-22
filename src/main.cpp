@@ -91,6 +91,26 @@ void menuFileActions(){
 		break;
 	}
 
+	case INT_MENU_ACTION_MOVE:{
+		switch(intParsedPrompt[3]){		// destination parameter
+			case INT_PARAMETER_END:{
+				fileMove(lstFiles, lstAbsolutePath, lstResolvedFileName, intParsedPrompt[2], lstRules.size() - 1);
+				break;
+			}
+			
+			case INT_PARAMETER_FIRST:{
+				fileMove(lstFiles, lstAbsolutePath, lstResolvedFileName, intParsedPrompt[2], 0);
+				break;
+			}
+			
+			case INT_PARAMETER_TO:{
+				fileMove(lstFiles, lstAbsolutePath, lstResolvedFileName, intParsedPrompt[2], intParsedPrompt[4]);
+				break;
+			}
+		}
+		break;
+	}
+	
 	default:
 		break;
 	}
@@ -170,6 +190,26 @@ void menuRuleActions(){
 			}
 			else{
 				cout << "[" << intParsedPrompt[2] << "] " << r << "\n";
+			}
+		}
+		break;
+	}
+
+	case INT_MENU_ACTION_MOVE:{
+		switch(intParsedPrompt[3]){		// destination parameter
+			case INT_PARAMETER_END:{
+				ruleMove(lstRules, intParsedPrompt[2], lstRules.size() - 1);
+				break;
+			}
+			
+			case INT_PARAMETER_FIRST:{
+				ruleMove(lstRules, intParsedPrompt[2], 0);
+				break;
+			}
+			
+			case INT_PARAMETER_TO:{
+				ruleMove(lstRules, intParsedPrompt[2], intParsedPrompt[4]);
+				break;
 			}
 		}
 		break;
@@ -321,8 +361,12 @@ void preparingCommandsMap(){
 	commandMap.insert(pair<string, ConstInt>(MENU_ACTION_ADD, INT_MENU_ACTION_ADD));
 	commandMap.insert(pair<string, ConstInt>(MENU_ACTION_REMOVE, INT_MENU_ACTION_REMOVE));
 	commandMap.insert(pair<string, ConstInt>(MENU_ACTION_SHOW, INT_MENU_ACTION_SHOW));
+	commandMap.insert(pair<string, ConstInt>(MENU_ACTION_MOVE, INT_MENU_ACTION_MOVE));
 
 	commandMap.insert(pair<string, ConstInt>(PARAMETER_ALL, INT_PARAMETER_ALL));
+	commandMap.insert(pair<string, ConstInt>(PARAMETER_TO, INT_PARAMETER_TO));
+	commandMap.insert(pair<string, ConstInt>(PARAMETER_END, INT_PARAMETER_END));
+	commandMap.insert(pair<string, ConstInt>(PARAMETER_FIRST, INT_PARAMETER_FIRST));
 	
 	commandMap.insert(pair<string, ConstInt>(RULE_INSERT, INT_RULE_INSERT));
 	commandMap.insert(pair<string, ConstInt>(RULE_NUMBERING, INT_RULE_NUMBERING));
