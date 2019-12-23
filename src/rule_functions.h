@@ -9,7 +9,7 @@
 #include <iostream>
 using namespace std;
 
-enum AvailableRules{
+enum AvailableRules {
 	Insert,
 	Numering,
 	Remove,
@@ -29,6 +29,6 @@ string ruleShow(vector<CRule*>* lstRules, const unsigned& index);
 vector<string>* ruleShowAll(vector<CRule*>* lstRules);
 bool ruleRemove(vector<CRule*>* lstRules, const unsigned& index);
 size_t ruleRemoveAll(vector<CRule*>* lstRules);
-void ruleMove(std::vector< CRule* >& lstRules, unsigned int from, unsigned int to);
+void ruleMove(vector<CRule*>& lstRules, unsigned from, unsigned to);
 
 #endif

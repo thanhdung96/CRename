@@ -255,6 +255,6 @@ void ruleMove(vector<CRule*>& lstRules, unsigned from, unsigned to){
 	
 	memmove(&lstRules.at(to), &temp->at(0), sizeOfRule);
 	memmove(&lstRules.at(from), &temp->at(1), sizeOfRule);
-	ruleRemoveAll(temp);
+	//ruleRemoveAll(temp);
 	delete temp;
 }
