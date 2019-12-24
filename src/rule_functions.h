@@ -9,7 +9,7 @@
 #include <iostream>
 using namespace std;
 
-enum AvailableRules{
+enum AvailableRules {
 	Insert,
 	Numering,
 	Remove,
@@ -17,11 +17,11 @@ enum AvailableRules{
 	SwitchCase
 };
 // constructing rule functions
-void createRuleInsert(CRuleInsert& insert, bool& status);
-void createRuleNumbering(CRuleNumber& number, bool& status);
-void createRuleRemove(CRuleRemove& remove, bool& status);
-void createRuleReplace(CRuleReplace& replace, bool& status);
-void createRuleSwitchCase(CRuleSwitchCase& switchCase, bool& status);
+void createRuleInsert(CRuleInsert* insert, bool& status);
+void createRuleNumbering(CRuleNumber* number, bool& status);
+void createRuleRemove(CRuleRemove* remove, bool& status);
+void createRuleReplace(CRuleReplace* replace, bool& status);
+void createRuleSwitchCase(CRuleSwitchCase* switchCase, bool& status);
 
 // general rule functions
 bool addRule(vector<CRule*>* lstRules, AvailableRules chosenRule);
@@ -29,5 +29,6 @@ string ruleShow(vector<CRule*>* lstRules, const unsigned& index);
 vector<string>* ruleShowAll(vector<CRule*>* lstRules);
 bool ruleRemove(vector<CRule*>* lstRules, const unsigned& index);
 size_t ruleRemoveAll(vector<CRule*>* lstRules);
+void ruleMove(vector<CRule*>& lstRules, unsigned from, unsigned to);
 
 #endif

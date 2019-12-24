@@ -246,3 +246,15 @@ size_t ruleRemoveAll(vector<CRule*>* lstRules){
 
 	return totalRemoved;
 }
+
+void ruleMove(vector<CRule*>& lstRules, unsigned from, unsigned to){
+	vector<CRule*>* temp = new vector<CRule*>(2);
+	size_t sizeOfRule = sizeof(CRule);
+	memcpy(&temp->at(0), &lstRules.at(from), sizeOfRule);
+	memcpy(&temp->at(1), &lstRules.at(to), sizeOfRule);
+	
+	memmove(&lstRules.at(to), &temp->at(0), sizeOfRule);
+	memmove(&lstRules.at(from), &temp->at(1), sizeOfRule);
+	//ruleRemoveAll(temp);
+	delete temp;
+}

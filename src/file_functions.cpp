@@ -67,6 +67,32 @@ size_t fileRemoveAll(vector<path>* lstFile, vector<path>* lstAbsolutePath, vecto
 	return totalRemoved;
 }
 
+void fileMove(vector<path>& lstFiles, vector<path>& lstAbsolutePath, vector<path>& lstResolvedFileName, unsigned int from, unsigned int to){
+	vector<path>* temp = new vector<path>(2);
+	size_t sizeOfPath = sizeof(path);
+	memcpy(&temp->at(0), &lstFiles.at(from), sizeOfPath);
+	memcpy(&temp->at(1), &lstFiles.at(to), sizeOfPath);
+	
+	memmove(&lstFiles.at(to), &temp->at(0), sizeOfPath);
+	memmove(&lstFiles.at(from), &temp->at(1), sizeOfPath);
+	 
+	memcpy(&temp->at(0), &lstAbsolutePath.at(from), sizeOfPath);
+	memcpy(&temp->at(1), &lstAbsolutePath.at(to), sizeOfPath);
+	
+	memmove(&lstAbsolutePath.at(to), &temp->at(0), sizeOfPath);
+	memmove(&lstAbsolutePath.at(from), &temp->at(1), sizeOfPath);
+
+	memcpy(&temp->at(0), &lstResolvedFileName.at(from), sizeOfPath);
+	memcpy(&temp->at(1), &lstResolvedFileName.at(to), sizeOfPath);
+	
+	memmove(&lstResolvedFileName.at(to), &temp->at(0), sizeOfPath);
+	memmove(&lstResolvedFileName.at(from), &temp->at(1), sizeOfPath);
+	
+	temp->clear();
+	temp->shrink_to_fit();
+	delete temp;
+}
+
 void resolveToAbsolute(vector<path>* lstFile, vector<path>* lstAbsolutePath, vector<path>* lstResolvedFileName){
 	removeElementFromList(nullptr, lstAbsolutePath, lstResolvedFileName);
 
@@ -98,5 +124,12 @@ void removeElementFromList(vector<path>* lstFile, vector<path>* lstAbsolutePath,
 		lstAbsolutePath->shrink_to_fit();
 		lstResolvedFileName->erase(lstResolvedFileName->begin() + index);
 		lstResolvedFileName->shrink_to_fit();
+	}
+}
+
+void resolveHome(string& pth){
+	if(pth.at(0) == '~'){
+		string homePath = getenv("HOME");
+		boost::replace_first(pth, "~", homePath);
 	}
 }

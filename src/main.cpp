@@ -23,6 +23,7 @@ void menuFileActions(){
 		unsigned count = 0;
 		cout << IMPORT_PROMPT;
 		getline(cin, pth);
+		resolveHome(pth);
 		if (!fileImportDirectory(&lstFiles, pth, count)){
 			cout << IMPORT_DIRECTORY_FAILED;
 		}
@@ -42,6 +43,7 @@ void menuFileActions(){
 	case INT_MENU_ACTION_ADD:{		//add a file
 		cout << IMPORT_PROMPT;
 		getline(cin, pth);
+		resolveHome(pth);
 		if (!addFile(&lstFiles, pth)){
 			cout << ADD_FILE_FAILED;
 		}
@@ -91,6 +93,26 @@ void menuFileActions(){
 		break;
 	}
 
+	case INT_MENU_ACTION_MOVE:{
+		switch(intParsedPrompt[3]){		// destination parameter
+			case INT_PARAMETER_END:{
+				fileMove(lstFiles, lstAbsolutePath, lstResolvedFileName, intParsedPrompt[2], lstRules.size() - 1);
+				break;
+			}
+			
+			case INT_PARAMETER_FIRST:{
+				fileMove(lstFiles, lstAbsolutePath, lstResolvedFileName, intParsedPrompt[2], 0);
+				break;
+			}
+			
+			case INT_PARAMETER_TO:{
+				fileMove(lstFiles, lstAbsolutePath, lstResolvedFileName, intParsedPrompt[2], intParsedPrompt[4]);
+				break;
+			}
+		}
+		break;
+	}
+	
 	default:
 		break;
 	}
@@ -102,35 +124,39 @@ void menuRuleActions(){
 	case INT_MENU_ACTION_ADD:{		//add a rule
 		AvailableRules chosenRule;
 		string strChosenRule;
-		switch(intParsedPrompt[2]){
-			case INT_RULE_INSERT:
-				chosenRule = AvailableRules::Insert;
-				strChosenRule = "insert rule";
-				break;
-			case INT_RULE_NUMBERING:
-				chosenRule = AvailableRules::Numering;
-				strChosenRule = "numbering rule";
-				break;
-			case INT_RULE_REMOVE:
-				chosenRule = AvailableRules::Remove;
-				strChosenRule = "removing rule";
-				break;
-			case INT_RULE_REPLACE:
-				chosenRule = AvailableRules::Replace;
-				strChosenRule = "replacing rule";
-				break;
-			case INT_RULE_CASE_SWITCH:
-				chosenRule = AvailableRules::SwitchCase;
-				strChosenRule = "switching case rule";
-				break;
-		}
-		
-		if(addRule(&lstRules, chosenRule) == true){
-			cout << strChosenRule << " added.\n";
+		if(intParsedPrompt.size() == 3){
+			switch(intParsedPrompt[2]){
+				case INT_RULE_INSERT:
+					chosenRule = AvailableRules::Insert;
+					strChosenRule = "insert rule";
+					break;
+				case INT_RULE_NUMBERING:
+					chosenRule = AvailableRules::Numering;
+					strChosenRule = "numbering rule";
+					break;
+				case INT_RULE_REMOVE:
+					chosenRule = AvailableRules::Remove;
+					strChosenRule = "removing rule";
+					break;
+				case INT_RULE_REPLACE:
+					chosenRule = AvailableRules::Replace;
+					strChosenRule = "replacing rule";
+					break;
+				case INT_RULE_CASE_SWITCH:
+					chosenRule = AvailableRules::SwitchCase;
+					strChosenRule = "switching case rule";
+					break;
+			}
+			
+			if(addRule(&lstRules, chosenRule) == true){
+				cout << strChosenRule << " added.\n";
+			} else{
+				cout << "rule addition aborted.\n";
+			}
+			break;
 		} else{
-			cout << "rule addition aborted.\n";
+			cout << "please specify a rule type.\n";
 		}
-		break;
 	}
 		
 	case INT_MENU_ACTION_REMOVE:{
@@ -170,6 +196,36 @@ void menuRuleActions(){
 		}
 		break;
 	}
+
+	case INT_MENU_ACTION_MOVE:{
+		if(intParsedPrompt[2] >= lstRules.size() || intParsedPrompt[2] < 0){
+			cout << "FROM index out of range.\n";
+		}
+		else{
+			switch(intParsedPrompt[3]){		// destination parameter
+				case INT_PARAMETER_END:{
+					ruleMove(lstRules, intParsedPrompt[2], lstRules.size() - 1);
+					break;
+				}
+				
+				case INT_PARAMETER_FIRST:{
+					ruleMove(lstRules, intParsedPrompt[2], 0);
+					break;
+				}
+				
+				case INT_PARAMETER_TO:{
+					if(intParsedPrompt[4] >= lstRules.size() || intParsedPrompt[4] < 0){
+						cout << "TO index out of range.\n";
+					}
+					else{
+						ruleMove(lstRules, intParsedPrompt[2], intParsedPrompt[4]);
+					}
+					break;
+				}
+			}
+		}
+		break;
+	}
 		
 	default:
 		break;
@@ -195,11 +251,15 @@ bool menuApplyActions(){
 		lstNewFileName.push_back(newName);
 	}
 	
+#ifdef IS_LINUX
+	char separator = '/';
+#else
+	char separator = '\\';
+#endif
 	for(unsigned i=0; i<lstAbsolutePath.size(); i++){
-		path oldAbsolutePath(canonical(lstResolvedFileName.at(i)));
-		path newAboslutePath(absolute(lstNewFileName.at(i)));
-		
-		rename(oldAbsolutePath, newAboslutePath);
+		path oldAbsolutePath(canonical(lstAbsolutePath.at(i).string()).string() + separator + lstResolvedFileName.at(i).string());
+		path newAbsolutePath(canonical(lstAbsolutePath.at(i).string()).string() + separator + lstNewFileName.at(i).string());
+		rename(oldAbsolutePath, newAbsolutePath);
 	}
 
 	lstNewFileName.clear();
@@ -258,39 +318,45 @@ void prompting(){
 	string returnedError;
 	cout << PROMPT_GREETER;
 	getline(cin, promptInput);
-	bool status = parsingCommand(returnedError);
+	boost::trim_all(promptInput);
 	
-	if (status == PARSE_FAILED){
-		cout << PARSE_FAILURE_NOTIFICATION << returnedError << "\n";
-	}
-	else{
-		switch (intParsedPrompt.at(0))
-		{
-		case INT_MAIN_MENU_EXIT:
-			isExit = true;
-			break;
-		case INT_MAIN_MENU_FILE:
-			menuFileActions();
-			break;
-		case INT_MAIN_MENU_RULE:
-			menuRuleActions();
-			break;
-		case INT_MAIN_MENU_APPLY:
-			menuApplyActions();
-			break;
-			
-		case INT_MAIN_MENU_PREVIEW:{
-			vector<string>* lstPreviewString = menuPreviewAction();
-			
-			for(unsigned i=0;i<lstPreviewString->size();i++){
-				cout << "[" << i << "]" << lstPreviewString->at(i) << "\n";
-			}
-			delete lstPreviewString;
-			break;
-		}
+	if(promptInput.length() > 0){
+		bool status = parsingCommand(returnedError);
 		
-		default:	//default case is help
-			break;
+		if (status == PARSE_FAILED){
+			cout << PARSE_FAILURE_NOTIFICATION << returnedError << "\n";
+		}
+		else{
+			switch (intParsedPrompt.at(0))
+			{
+			case INT_MAIN_MENU_EXIT:
+				isExit = true;
+				break;
+			case INT_MAIN_MENU_FILE:
+				menuFileActions();
+				break;
+			case INT_MAIN_MENU_RULE:
+				menuRuleActions();
+				break;
+			case INT_MAIN_MENU_APPLY:
+				menuApplyActions();
+				break;
+				
+			case INT_MAIN_MENU_PREVIEW:{
+				vector<string>* lstPreviewString = menuPreviewAction();
+				
+				if (lstPreviewString != nullptr) {
+					for (unsigned i = 0; i < lstPreviewString->size(); i++) {
+						cout << "[" << i << "]" << lstPreviewString->at(i) << "\n";
+					}
+				}
+				delete lstPreviewString;
+				break;
+			}
+			
+			default:	//default case is help
+				break;
+			}
 		}
 	}
 }
@@ -307,8 +373,12 @@ void preparingCommandsMap(){
 	commandMap.insert(pair<string, ConstInt>(MENU_ACTION_ADD, INT_MENU_ACTION_ADD));
 	commandMap.insert(pair<string, ConstInt>(MENU_ACTION_REMOVE, INT_MENU_ACTION_REMOVE));
 	commandMap.insert(pair<string, ConstInt>(MENU_ACTION_SHOW, INT_MENU_ACTION_SHOW));
+	commandMap.insert(pair<string, ConstInt>(MENU_ACTION_MOVE, INT_MENU_ACTION_MOVE));
 
 	commandMap.insert(pair<string, ConstInt>(PARAMETER_ALL, INT_PARAMETER_ALL));
+	commandMap.insert(pair<string, ConstInt>(PARAMETER_TO, INT_PARAMETER_TO));
+	commandMap.insert(pair<string, ConstInt>(PARAMETER_END, INT_PARAMETER_END));
+	commandMap.insert(pair<string, ConstInt>(PARAMETER_FIRST, INT_PARAMETER_FIRST));
 	
 	commandMap.insert(pair<string, ConstInt>(RULE_INSERT, INT_RULE_INSERT));
 	commandMap.insert(pair<string, ConstInt>(RULE_NUMBERING, INT_RULE_NUMBERING));
