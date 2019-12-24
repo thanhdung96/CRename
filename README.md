@@ -103,16 +103,16 @@ apply
 
 **Important:** please note that this action is **irreversible**.
 
-###Moving
+### Moving
 Files added and rules created can be moved up or down within the list
 
-###With index
+### With index
 
 ```
 file/rule move [from_index] to [to_index]
 ```
 
-###With keyword
+### With keyword
 
 ```
 file/rule move [from_index] end/first
