@@ -198,20 +198,30 @@ void menuRuleActions(){
 	}
 
 	case INT_MENU_ACTION_MOVE:{
-		switch(intParsedPrompt[3]){		// destination parameter
-			case INT_PARAMETER_END:{
-				ruleMove(lstRules, intParsedPrompt[2], lstRules.size() - 1);
-				break;
-			}
-			
-			case INT_PARAMETER_FIRST:{
-				ruleMove(lstRules, intParsedPrompt[2], 0);
-				break;
-			}
-			
-			case INT_PARAMETER_TO:{
-				ruleMove(lstRules, intParsedPrompt[2], intParsedPrompt[4]);
-				break;
+		if(intParsedPrompt[2] >= lstRules.size() || intParsedPrompt[2] < 0){
+			cout << "FROM index out of range.\n";
+		}
+		else{
+			switch(intParsedPrompt[3]){		// destination parameter
+				case INT_PARAMETER_END:{
+					ruleMove(lstRules, intParsedPrompt[2], lstRules.size() - 1);
+					break;
+				}
+				
+				case INT_PARAMETER_FIRST:{
+					ruleMove(lstRules, intParsedPrompt[2], 0);
+					break;
+				}
+				
+				case INT_PARAMETER_TO:{
+					if(intParsedPrompt[4] >= lstRules.size() || intParsedPrompt[4] < 0){
+						cout << "TO index out of range.\n";
+					}
+					else{
+						ruleMove(lstRules, intParsedPrompt[2], intParsedPrompt[4]);
+					}
+					break;
+				}
 			}
 		}
 		break;
