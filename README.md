@@ -94,6 +94,7 @@ rule show all/[index]
 ```
 preview
 ```
+
 ### Applying
 - Applying changeset to added files:
 ```
@@ -101,6 +102,23 @@ apply
 ```
 
 **Important:** please note that this action is **irreversible**.
+
+###Moving
+Files added and rules created can be moved up or down within the list
+
+###With index
+
+```
+file/rule move [from_index] to [to_index]
+```
+
+###With keyword
+
+```
+file/rule move [from_index] end/first
+```
+
+Using "end" wil move item to the end of list while "first" to the start of the list.
 
 ## Contact
 
