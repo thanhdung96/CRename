@@ -2,21 +2,17 @@
 #define FILE_FUNCTIONS_H_INCLUDED
 
 #ifdef IS_LINUX
+	#include <boost/algorithm/string/replace.hpp>
 	#include <boost/filesystem.hpp>
 #else
 	#include <boost\filesystem.hpp>
+	#include <boost\algorithm\string\replace.hpp>
 #endif
 
 #include <vector>
 #include <string>
 #include <sstream>
 #include <cstdlib>
-
-#ifdef IS_LINUX
-	#include <boost/algorithm/string/replace.hpp>
-#else
-	#include <boost\algorithm\string\replace.hpp>
-#endif
 
 using namespace std;
 using namespace boost::filesystem;
